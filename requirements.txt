@@ -3,3 +3,8 @@ pandas
 facenet-pytorch
 tqdm
 werkzeug
+pip install opencv-python
+Pillow==2.2.2
+imutils
+tqdm
+pnslib
