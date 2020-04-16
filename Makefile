@@ -1,7 +1,3 @@
-CMD:
-    virtualenv .venv
-    . .venv/bin/acivate ;\
-
 install:
 	pip install --upgrade pip &&\
 	pip install -r requirements.txt &&\
