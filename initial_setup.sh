@@ -4,4 +4,4 @@
 #sudo apt install virtualenv
 virtualenv .venv
 source .venv/bin/activate
-make Makefile
+make ./Makefile
