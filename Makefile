@@ -4,4 +4,4 @@ install:
 	pip install git+git://github.com/PnS2019/pnslib.git &&\
     pip install -q -U imutils git+https://github.com/the-house-of-black-and-white/hall-of-faces.git
 
-all: CMD , install
+all: install
