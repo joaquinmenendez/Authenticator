@@ -1,10 +1,10 @@
 flask==1.1.1
 pandas
+torch
 facenet-pytorch
 tqdm
 werkzeug
-pip install opencv-python
-Pillow==2.2.2
+opencv-python
+Pillow
 imutils
 tqdm
-pnslib
