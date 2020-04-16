@@ -1,6 +1,6 @@
 CMD:
     virtualenv .venv
-    source .venv/bin/acivate
+    . .venv/bin/acivate ;\
 
 install:
 	pip install --upgrade pip &&\
