@@ -1,6 +1,6 @@
 # Dockerfile to build our container
 #Base image 
-FROM pytorch
+FROM pytorch/pytorch
 USER root
 
 # Working Directory
@@ -19,5 +19,3 @@ RUN pip install --upgrade pip &&\
 #Espose a port(just in case we want to run an app in the future)
 
 EXPOSE 8080
-
-CMD ["python", "draft.py"]
