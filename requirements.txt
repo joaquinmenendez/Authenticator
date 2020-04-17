@@ -6,3 +6,6 @@ opencv-python
 imutils
 tqdm
 facenet_pytorch
+torchvision
+matplotlib
+face-recognition
