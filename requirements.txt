@@ -1,10 +1,8 @@
 flask==1.1.1
 pandas
-torch
-facenet-pytorch
 tqdm
 werkzeug
 opencv-python
-Pillow
 imutils
 tqdm
+facenet_pytorch
