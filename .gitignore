@@ -1,3 +1,6 @@
+# Files with Keys
+keys.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
