@@ -9,3 +9,4 @@ tqdm
 facenet_pytorch
 torchvision
 boto3
+boto
