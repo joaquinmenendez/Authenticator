@@ -1,21 +1,31 @@
 # Facial_Recognition_Pipeline
 A facial recognition pipeline using AWS Sagemaker
 
+## Containerization 
+
+It seems that Amazon Cloud9 came with an **8GB// default size.
+In order to expand this you should run a small bash script (`resize.sh`).
+A more detailed description could be consulted on this [link](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html).
+
+### Virtual environment
 ```bash
 virtualenv .myenv
 source .myenv/bin/activate
 make install
 ```
-A different approach is using a Docker container
+
+### Docker container (need to finish run_docker)
 
 ```bash
 docker pull pytorch/pytorch
+bash run_docker.sh
 ```
 
-I found a solution for the space problem. It seems that Amazon Cloud9 came with
-an 8GB default size. In order to expand this you should run a small bash script (`resize.sh`).
-A more detailed description could be consulted on this [link](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html).
+## Functions 
+**Step by step**
+1) uploadBucket.py (need to write)
+2) downloadBucket.py
+3) video2frame.py
+4) faceRecognition.py (need to write)
+    
 
-# Last thing done 2:52 4/17/2020
-Now we can run the virtualenv withut problems. 
-I did not tried the docker container (despite it's not necessary it could be fancy to offer this possibility)
