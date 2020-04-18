@@ -8,3 +8,4 @@ imutils
 tqdm
 facenet_pytorch
 torchvision
+boto3
