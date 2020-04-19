@@ -20,9 +20,6 @@ def uploadBucket(video_file, bucket_name, person_name, keys = None):
     :param output_file: S3 object name.
     :return: String 
     """
-    with open(keys) as k:
-        keys = json.load(k) # Read keys.json if selected
-
     if keys is None:
         s3_client = boto3.client('s3')
         try:
@@ -32,6 +29,9 @@ def uploadBucket(video_file, bucket_name, person_name, keys = None):
             print(sys.exc_info()[0])
     
     else:
+        # Read keys.json if selected
+        with open(keys) as k:
+            keys = json.load(k)
         #we need to solve the problem to connect to the bucket'
         s3_client = boto3.client('s3', 
                       aws_access_key_id = keys["AWS_ACCESS_KEY_ID"], 
