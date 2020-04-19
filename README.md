@@ -3,7 +3,7 @@ A facial recognition pipeline using AWS Sagemaker
 
 ## Containerization 
 
-It seems that Amazon Cloud9 came with an **8GB// default size.
+It seems that Amazon Cloud9 came with an **8GB** default size.
 In order to expand this you should run a small bash script (`resize.sh`).
 A more detailed description could be consulted on this [link](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html).
 
