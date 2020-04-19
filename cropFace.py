@@ -1,17 +1,8 @@
-# Libraries
-from facenet_pytorch import MTCNN, InceptionResnetV1
+from facenet_pytorch import MTCNN
 import cv2
-#from pnslib import utils
-#from PIL import Image
 from matplotlib import pyplot as plt
-#from tqdm.notebook import tqdm
 import numpy as np
 from imutils import  url_to_image, opencv2matplotlib
-#from hof.face_detectors import RfcnResnet101FaceDetector, SSDMobileNetV1FaceDetector,FasterRCNNFaceDetector, YOLOv2FaceDetector, TinyYOLOFaceDetector
-
-
-
-MIN_CONFIDENCE=0.5
 
 def display(img, figsize=(15,15)):
   plt.figure(figsize=figsize)
@@ -28,7 +19,7 @@ def cropFace(path_to_img):
     plt.imshow(img_cropped.permute(1, 2, 0).int().numpy() )  
     plt.axis('off')
     plt.savefig('multimedia/messi_face.jpg')
-    print('Done')
+    #print('Done')
 
 
 cropFace("./multimedia/messi.jpg")
