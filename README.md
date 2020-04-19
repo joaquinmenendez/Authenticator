@@ -22,10 +22,16 @@ bash run_docker.sh
 ```
 
 ## Functions 
+
+We are using our own personal bucket (`video-facerecogproj`) for this project. 
+In case that you wanted to replicate this project create a new bucket and write the **access** and **secret** keys into a json file like this:
+```json
+{"AWS_ACCESS_KEY_ID" : <>,
+"AWS_SECRET_ACCESS_KEY" : <>,
+"REGION_NAME" : <> }
+```
 **Step by step**
-1) uploadBucket.py (need to write)
+1) uploadBucket.py (need to solve some issues)
 2) downloadBucket.py
 3) video2frame.py
-4) faceRecognition.py (need to write)
-    
-
+4) cropFace.py (need to write)
