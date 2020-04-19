@@ -59,18 +59,4 @@ if __name__ == "__main__":
     main()
 
 
-# AWS_ACCESS_KEY_ID = 'AKIA2IYON5X7W5F53BHE'
-# AWS_SECRET_ACCESS_KEY = 'NeGeFzpgvPgLir4xVnety6EYF8aV6zZ/qgqJRIYo'
-# Bucketname = 'video-facerecogproj' 
-# filename = "IMG-3935.MOV" # replace with your object key
 
-# conn = boto.s3.connect_to_region('us-east-1',
-#       aws_access_key_id=AWS_ACCESS_KEY_ID,
-#       aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-#       is_secure=True,               # uncomment if you are not using ssl
-#       calling_format = boto.s3.connection.OrdinaryCallingFormat(),
-#       )
-       
-# bucket = conn.get_bucket(Bucketname)
-# key = bucket.get_key(filename)
-# key.get_contents_to_filename("hola.MOV")
