@@ -17,6 +17,12 @@ def crop(input_img):
   img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
   mtcnn = MTCNN(select_largest=False, post_process = False, margin = 50)
   img_cropped = mtcnn(img)
+  #simple message notifying if a face was detected or not
+  if img_cropped is not None:
+    print('Face detected')
+  else: 
+    print(f'Face not detected in file {input_img} \
+            \nScript interrupted')
   img_cropped = img_cropped.permute(1, 2, 0).int().numpy() 
   return img_cropped
   
