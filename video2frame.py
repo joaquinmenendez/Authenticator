@@ -8,7 +8,7 @@ parser.add_argument("output_file", help="Directory for saving the frames",type=s
 parser.add_argument("fig_name", help="Name of the image to be saved", type = str)
 parser.add_argument("--mod_num", help="Save frames each mod_num of time", default = 5, type = int)
 
-def video2frame(video_file,output_file,fig_name,mod_num = 5):
+def video2frame(video_file,output_file,fig_name,mod_num ):
   """
   This function converts video to frames and saves it into the 
 
@@ -26,7 +26,7 @@ def video2frame(video_file,output_file,fig_name,mod_num = 5):
   frames = frame_list(video, video_len, mod_num)
 
   # Saving images in output_file dir
-  save_paths = [cv2.imwrite('{out}/{name}_{num}.jpg'.format(out=output_file,name=fig_name,num=str(i)), frame) 
+  [cv2.imwrite('{out}/{name}_{num}.jpg'.format(out=output_file,name=fig_name,num=str(i)), frame) 
   for i,frame in enumerate(frames,1)]
   
   return print("{0} images saved in {1}".format(len(frames),output_file))
