@@ -32,7 +32,7 @@ In case that you wanted to replicate this project create a new bucket and write 
 "BUCKET_NAME" : "---"}
 ```
 **Step by step**
-1) uploadBucket.py (need to solve some issues but working)
-2) downloadBucket.py
+1) uploadBucket.py (need to solve some issues to download external buckets  but working)
+2) downloadBucket.py (need to solve some issues to download external buckets but working)
 3) video2frame.py
 4) cropFace.py (need to polish documentation but working)
