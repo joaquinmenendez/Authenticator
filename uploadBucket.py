@@ -17,7 +17,7 @@ def uploadBucket(video_file, bucket_name, person_name, keys = None):
 
     :param video_file: Video file to upload
     :param bucket_name: Bucket to upload to
-    :param output_file: S3 object name.
+    :param person_name: S3 object name.
     :return: String 
     """
     if keys is None:
