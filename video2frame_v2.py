@@ -34,14 +34,14 @@ def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
     [cv2.imwrite('{out}/{name}_{num}.jpg'.format(out=output_file, name = person_name, num=str(i)), frame) 
     for i,frame in enumerate(frames,1)]
     return print("{0} images saved in {1}".format(len(frames),output_file))
-  
   if bucket_keys is not None:
     with open(bucket_keys) as k:
       keys = json.load(k)
       bucket_name = keys["BUCKET_NAME"]
-      for n,i enumerate(frames):
-        p_name =  f'/{person_name}/{person_name}_{n}' #it's saving as an object every frame
-        uploadBucketAsObject(video_file, i, bucket_name, person_name = p_name, keys = bucket_keys)
+      
+      #for n,i enumerate(frames):
+      #  p_name =  f'/{person_name}/{person_name}_{n}' #it's saving as an object every frame
+      uploadBucketAsObject(video_file, frames, bucket_name, person_name, keys = bucket_keys)
 
   
 
