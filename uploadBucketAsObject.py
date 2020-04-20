@@ -60,13 +60,14 @@ def uploadObject(s3_client, frames, video_file, bucket_name, person_name):
     :param person_name : string
     :return: None
     '''
-    with open(f'{person_name}_binary', 'wb') as file:
-        pickle.dump(frames, file)
-    binary_obj = pickle.load(open(f'{person_name}_binary', "rb"))
-    
+    #with open(f'{person_name}_binary', 'wb') as file:
+    #    pickle.dump(frames, file)
+    #binary_obj = pickle.load(open(f'{person_name}_binary', "rb"))
+    my_array_data = io.BytesIO()
+    pickle.dump(frames, my_array_data)
+    my_array_data.seek(0)
     try:
-        s3_client.put_object(Body=binary_obj, Bucket=bucket_name, Key=person_name + '_frames')
-        #response = s3_client.upload_fileobj(fileobj=binary_obj, bucket=bucket_name, key=person_name)
+        response = s3_client.upload_fileobj(my_array_data, bucket_name, person_name)
         print(f'{video_file} has been uploaded correctly to: {bucket_name}/{person_name} as an OBJECT')
     except: # catch all
         print('uploadObject error:')
