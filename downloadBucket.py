@@ -12,7 +12,8 @@ parser.add_argument("output_file", help="Directory to store the video",type=str)
 parser.add_argument("--keys", help="File with access keys") # None is default 
 
 def downloadBucket(bucket_name, file_name, output_file, keys = None):
-    """Upload a file to an S3 bucket.
+    """
+    Upload a file to an S3 bucket. 
     The bucket could be an external bucket only if the keys are passed.
     
     Args:
@@ -28,7 +29,7 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
     if keys is None:
         s3_client = boto3.client('s3')
         try:
-            response = s3_client.download_file(bucket_name,file_name,output_file+"/"+file_name)
+            s3_client.download_file(bucket_name,file_name,output_file+"/"+file_name)
             print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name }')
         except: # catch all
             print(sys.exc_info()[0])
@@ -45,7 +46,7 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
                       region_name = keys["REGION_NAME"]
                       )
         try:
-            response = s3_client.download_file(bucket_name,file_name,output_file+"/"+file_name)
+            s3_client.download_file(bucket_name,file_name,output_file+"/"+file_name)
             print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name}')
         except: # catch all
             print(sys.exc_info()[0])
