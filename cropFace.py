@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from imutils import  url_to_image, opencv2matplotlib
 
+
 parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("input_img", help="Directory file of the image to crop",type=str)
 parser.add_argument("--output", help="[Optional] Directory where the output image be saved to. If selected the numpy output will be override",type=str)
@@ -18,11 +19,9 @@ def crop(input_img):
   mtcnn = MTCNN(select_largest=False, post_process = False, margin = 50)
   img_cropped = mtcnn(img)
   #simple message notifying if a face was detected or not
-  if img_cropped is not None:
-    print('Face detected')
-  else: 
-    print(f'Face not detected in file {input_img} \
-            \nScript interrupted')
+  if img_cropped is None:
+    print(f'Face not detected in file {input_img}')
+    return
   img_cropped = img_cropped.permute(1, 2, 0).int().numpy() 
   return img_cropped
   
@@ -55,14 +54,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    
-''' 
-DEPRECATED 
-
-def display(img, figsize=(15,15)):
-  plt.figure(figsize=figsize)
-  plt.axis('off')
-  plt.imshow(opencv2matplotlib(img))
-  plt.show()
-'''
