@@ -9,11 +9,12 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument("video_file", help="Directory file of the video",type=str)
 parser.add_argument("--mod_num", help="Save frames each mod_num of time", default = 5, type = int)
+parser.add_argument("--name", help="Name of the person that appear on the video", type = str)
 parser.add_argument("--output_file", help="Directory for saving the frames",type=str) # None is default 
 parser.add_argument("--bucket_keys", help="file with access keys", type = str) # None is default 
 
 
-def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
+def video2frame(video_file, mod_num, person_name = None, output_file = None, bucket_keys = None):
   """
   This function converts video to frames. It has the option to save the frames as images. 
   If the user want to store the images into a bucket it should pass the arg `bucket_keys` instead of output_file. 
@@ -29,7 +30,8 @@ def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
   video = cv2.VideoCapture(video_file)
   video_len = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
   frames = frame_list(video, video_len, mod_num)
-  person_name = input('Please write the name of the person that appears in this video: ')
+  if person_name is None:
+    person_name = input('Please write the name of the person that appears in this video: ')
   if output_file is not None:
     # Saving images in output_file dir.
     # CV2 does not identify if the camera used was frontal or backward.
@@ -77,7 +79,7 @@ def frame_list(video, video_len, mod_num):
 
 def main():
   args = parser.parse_args()
-  video2frame(args.video_file,args.mod_num,args.output_file,args.bucket_keys)
+  video2frame(args.video_file,args.mod_num, args.name, args.output_file,args.bucket_keys)
 
 if __name__ == "__main__":
     main()
