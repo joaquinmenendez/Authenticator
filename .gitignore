@@ -2,7 +2,7 @@
 images/*
 
 # Files with Keys
-keys.json
+*keys.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
