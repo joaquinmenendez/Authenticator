@@ -49,7 +49,7 @@ def downloadBucket(bucket_name, file_name, output_file, keys):
             print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name}')
         except: # catch all
             print(sys.exc_info()[0])
-#s3.meta.client.download_file('mybucket', 'hello.txt', '/tmp/hello.txt')
+
 
 def main():
   args = parser.parse_args()

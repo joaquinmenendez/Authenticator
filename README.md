@@ -31,8 +31,10 @@ In case that you wanted to replicate this project create a new bucket and write 
 "REGION_NAME" : "---",
 "BUCKET_NAME" : "---"}
 ```
+If you don't know how to obtain these credentials check this [tutorial](https://preventdirectaccess.com/docs/amazon-s3-quick-start-guide/)
+
 **Step by step**
-1) uploadBucket.py (need to solve some issues to download external buckets  but working)
-2) downloadBucket.py (need to solve some issues to download external buckets but working)
+1) uploadBucket.py 
+2) downloadBucket.py 
 3) video2frame.py
-4) cropFace.py (need to polish documentation but working)
+4) cropFace.py (need to polish documentation but working. Need to solve issued regarding the output from `video2frame.py`)
