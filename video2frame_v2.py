@@ -44,8 +44,6 @@ def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
       p_name =  f"{person_name}/{person_name}_{n}.pickle" #it's saving as an object every frame
       uploadBucketAsObject(video_file, frames, bucket_name, p_name, keys = bucket_keys)
 
-  
-
 def frame_list(video, video_len, mod_num):
   """
   Receives a video capture from cv2 and the video length, 
