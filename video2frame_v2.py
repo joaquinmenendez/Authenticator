@@ -41,7 +41,7 @@ def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
       keys = json.load(k)
     bucket_name = keys["BUCKET_NAME"]
     for n,i in enumerate(frames):
-      p_name =  f"{person_name}/{person_name}_{n}" #it's saving as an object every frame
+      p_name =  f"{person_name}/{person_name}_{n}.pickle" #it's saving as an object every frame
       uploadBucketAsObject(video_file, frames, bucket_name, p_name, keys = bucket_keys)
 
   
