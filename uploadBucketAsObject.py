@@ -17,7 +17,7 @@ parser.add_argument("--keys", help="file with access keys", type = str) # None i
 
 def uploadBucketAsObject(video_file, frames, bucket_name, person_name, keys = None):
     '''
-    This function uploads a binary object to an S3 bucket.
+    This function uploads a numpy array to an S3 bucket.
     The bucket could be an external bucket only if the keys are provided (--keys)
     
     :param video_file: Video file to upload
@@ -72,6 +72,7 @@ def uploadObject(s3_client, frames, video_file, bucket_name, person_name):
     except: # catch all
         print('uploadObject error:')
         print(sys.exc_info()[0])
+    del (my_array_data)
     
 
 
