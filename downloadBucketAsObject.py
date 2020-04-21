@@ -4,14 +4,16 @@ import boto3
 import boto.s3.connection
 import sys
 import json
+import os
 
 parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("bucket_name", help="Name of the bucket to download from", type = str)
 parser.add_argument("file_name", help="Name of the video inside the bucket",type=str)
 parser.add_argument("output_file", help="Directory to store the video",type=str)
 parser.add_argument("--keys", help="File with access keys") # None is default 
+parser.add_argument("--name", help='Name of the person')
 
-def downloadBucket(bucket_name, file_name, output_file, keys = None):
+def downloadBucket(bucket_name, file_name, output_file, keys = None, name = None):
     """Download an object from a S3 Bucket.
     The bucket could be an external bucket only if the keys are passed.
     
@@ -28,9 +30,9 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
     if keys is None:
         s3_client = boto3.client('s3')
         try:
-            with open(output_file+"/"+file_name, 'wb') as f:
+            with open(os.path.join(output_file,name), 'wb') as f:
                 s3_client.download_fileobj(bucket_name, file_name, f)
-            print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name }')
+            print(f'{file_name} has been downloaded correctly to: {os.path.join(output_file,name)}')
         except: # catch all
             print(sys.exc_info()[0])
     
@@ -46,16 +48,16 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
                       region_name = keys["REGION_NAME"]
                       )
         try:
-            with open(output_file+"/"+file_name, 'wb') as f:
+            with open(os.path.join(output_file,name), 'wb') as f:
                 s3_client.download_fileobj(bucket_name, file_name, f)
-            print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name}')
+            print(f'{file_name} has been downloaded correctly to: {os.path.join(output_file,name)}')
         except: # catch all
             print(sys.exc_info()[0])
 
 
 def main():
   args = parser.parse_args()
-  downloadBucket(args.bucket_name,args.file_name,args.output_file,args.keys)
+  downloadBucket(args.bucket_name,args.file_name,args.output_file,args.keys, args.name)
 
 if __name__ == "__main__":
     main()
