@@ -1,6 +1,7 @@
 import argparse
 import cv2
 from PIL import Image
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("video_file", help="Directory file of the video",type=str, )
@@ -26,7 +27,7 @@ def video2frame(video_file,output_file,fig_name,mod_num ):
   frames = frame_list(video, video_len, mod_num)
 
   # Saving images in output_file dir
-  [cv2.imwrite('{out}/{name}_{num}.jpg'.format(out=output_file,name=fig_name,num=str(i)), frame) 
+  [cv2.imwrite(os.path.join(output_file,'{name}_{num}.jpg'.format(name=fig_name,num=str(i))), cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE))
   for i,frame in enumerate(frames,1)]
   
   return print("{0} images saved in {1}".format(len(frames),output_file))
