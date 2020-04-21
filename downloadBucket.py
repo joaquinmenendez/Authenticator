@@ -9,11 +9,11 @@ parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("bucket_name", help="Name of the bucket to download from", type = str)
 parser.add_argument("file_name", help="Name of the video inside the bucket",type=str)
 parser.add_argument("output_file", help="Directory to store the video",type=str)
-parser.add_argument("--keys", default = None, help="File with access keys") # None is default 
+parser.add_argument("--keys", help="File with access keys") # None is default 
 
-def downloadBucket(bucket_name, file_name, output_file, keys):
-    """Upload a video to an S3 bucket.
-    The bucket could be an external bucket only if the keys are 
+def downloadBucket(bucket_name, file_name, output_file, keys = None):
+    """Upload a file to an S3 bucket.
+    The bucket could be an external bucket only if the keys are passed.
     
     Args:
        bucket_name (str): Name of the bucket to download from
