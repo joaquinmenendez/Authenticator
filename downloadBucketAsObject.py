@@ -28,8 +28,8 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
     if keys is None:
         s3_client = boto3.client('s3')
         try:
-           with open(output_file+"/"+file_name, 'wb') as f:
-                s3.download_fileobj(bucket_name, file_name, f)
+            with open(output_file+"/"+file_name, 'wb') as f:
+                s3_client.download_fileobj(bucket_name, file_name, f)
             print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name }')
         except: # catch all
             print(sys.exc_info()[0])
@@ -47,7 +47,7 @@ def downloadBucket(bucket_name, file_name, output_file, keys = None):
                       )
         try:
             with open(output_file+"/"+file_name, 'wb') as f:
-                s3.download_fileobj(bucket_name, file_name, f)
+                s3_client.download_fileobj(bucket_name, file_name, f)
             print(f'{file_name} has been downloaded correctly to: {output_file}/{file_name}')
         except: # catch all
             print(sys.exc_info()[0])
