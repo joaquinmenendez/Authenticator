@@ -1,0 +1,19 @@
+{
+    "Version": "2020-19-4",
+    "Statement": [
+        {
+            "Sid": "POLICYPDAS3",
+            "Effect": "Allow",
+            "Action": [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Put*",
+                "s3:Delete*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::`YOUR BUCKET NAME`/*",
+                "arn:aws:s3:::`YOUR BUCKET NAME`"
+            ]
+        }
+    ]
+}
