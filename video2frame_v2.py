@@ -4,6 +4,7 @@ from PIL import Image
 import pickle
 from uploadBucketAsObject import uploadBucketAsObject
 import json
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("video_file", help="Directory file of the video",type=str)
@@ -31,15 +32,17 @@ def video2frame(video_file, mod_num, output_file = None, bucket_keys = None):
   person_name = input('Please write the name of the person that appears in this video: ')
   if output_file is not None:
     # Saving images in output_file dir.
-    # CV2 does not identify if the camera used was frontal or backward. We are using only frontal camera so we are rotating the frames
-    
-    [cv2.imwrite('{out}/{name}_{num}.jpg'.format(out=output_file, name = person_name, num=str(i)), cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)) 
+    # CV2 does not identify if the camera used was frontal or backward.
+    # We are using only frontal camera so we are rotating the frames
+    [cv2.imwrite(os.path.join(output_file,'{name}_{num}.jpg'.format(name=person_name, num=str(i))), cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)) 
     for i,frame in enumerate(frames,1)]
     return print("{0} images saved in {1}".format(len(frames),output_file))
+  #I f the user pass the argumen bucket_keys  
   if bucket_keys is not None:
     with open(bucket_keys) as k:
       keys = json.load(k)
     bucket_name = keys["BUCKET_NAME"]
+    # Iterate over frames and store every frame a an individual object
     for n,i in enumerate(frames):
       p_name =  f"{person_name}/{person_name}_{n}.pickle" #it's saving as an object every frame
       uploadBucketAsObject(video_file, frames, bucket_name, p_name, keys = bucket_keys)
