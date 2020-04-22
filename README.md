@@ -35,5 +35,5 @@ If you don't know how to obtain these credentials check this [tutorial](https://
 The policy we used is in [`configuration_s3.json`](https://raw.githubusercontent.com/joaquinmenendez/Facial_Recognition_Pipeline/master/multimedia/configuration_s3.json?token=AKLBVDXAUB7C5CAKASBDOEC6VD47Q)
 
 
-**Step by step**
-The script `pipeline_local.sh` took a video, took a frame every *n* frames and crop only the face and save it.
+**Step by step**<br>
+The script `pipeline_local.sh` took a video, took a frame every *n* frames, select only the face and save it. as a .jpg file
