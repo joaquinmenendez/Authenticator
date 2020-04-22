@@ -12,12 +12,13 @@ parser.add_argument("--mod_num", help="Save frames each mod_num of time", defaul
 parser.add_argument("--name", help="Name of the person that appear on the video", type = str)
 parser.add_argument("--output_file", help="Directory for saving the frames",type=str) # None is default 
 parser.add_argument("--bucket_keys", help="file with access keys", type = str) # None is default 
+parser.add_argument("--rotate", help="[ROTATE_90_CLOCKWISE, ROTATE_180, ROTATE_90_COUNTERCLOCKWISE]", default ='ROTATE_90_CLOCKWISE', type = str) 
 
-
-def video2frame(video_file, mod_num, person_name = None, output_file = None, bucket_keys = None):
+def video2frame(video_file, mod_num, person_name = None, output_file = None, bucket_keys = None, rotate = 'ROTATE_90_CLOCKWISE' ):
   """
-  This function converts video to frames. It has the option to save the frames as images. 
-  If the user want to store the images into a bucket it should pass the arg `bucket_keys` instead of output_file. 
+  This function converts video to frames. It has the option to save the frames as images
+  in a local directory and/or into a s3 bucket.a
+  If the user want to store the images into a bucket it should pass the arg `bucket_keys`. 
 
   Args:
     video_file (str): Directory file of the video
@@ -36,18 +37,18 @@ def video2frame(video_file, mod_num, person_name = None, output_file = None, buc
     # Saving images in output_file dir.
     # CV2 does not identify if the camera used was frontal or backward.
     # We are using only frontal camera so we are rotating the frames
-    [cv2.imwrite(os.path.join(output_file,'{name}_{num}.jpg'.format(name=person_name, num=str(i))), cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)) 
+    [cv2.imwrite(os.path.join(output_file,'{name}_{num}.jpg'.format(name=person_name, num=str(i))), cv2.rotate(frame, eval("cv2." + rotate) )) 
     for i,frame in enumerate(frames,1)]
-    return print("{0} images saved in {1}".format(len(frames),output_file))
+    print("{0} images saved in {1}".format(len(frames),output_file))
   #I f the user pass the argumen bucket_keys  
   if bucket_keys is not None:
     with open(bucket_keys) as k:
       keys = json.load(k)
     bucket_name = keys["BUCKET_NAME"]
     # Iterate over frames and store every frame a an individual object
-    for n,i in enumerate(frames):
+    for n,frame in enumerate(frames):
       p_name =  f"{person_name}/{person_name}_{n}.pickle" #it's saving as an object every frame
-      uploadBucketAsObject(video_file, frames, bucket_name, p_name, keys = bucket_keys)
+      uploadBucketAsObject(video_file, frame, bucket_name, p_name, keys = bucket_keys)
 
 def frame_list(video, video_len, mod_num):
   """
@@ -79,7 +80,7 @@ def frame_list(video, video_len, mod_num):
 
 def main():
   args = parser.parse_args()
-  video2frame(args.video_file,args.mod_num, args.name, args.output_file,args.bucket_keys)
+  video2frame(args.video_file,args.mod_num, args.name, args.output_file,args.bucket_keys, args.rotate)
 
 if __name__ == "__main__":
     main()
