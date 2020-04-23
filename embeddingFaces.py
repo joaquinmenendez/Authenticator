@@ -11,12 +11,13 @@ parser.add_argument("--tensor", help="Returns embeddings as tensor, instead of n
 
 def readFaces(file,model,tensor = False):
     """
+    Reads all images from a file and returns all the embedings with their corresponding label
+    
 				Args:
        file (str): Name of the directory that contains all images 
        model (object): Model to do embeddings
-       --tensor (json): Returns embeddings as tensor, instead of numpy arrays
-    
-
+       tensor (bool): Returns embeddings as tensor, instead of numpy arrays
+   
     Returns:
        train (list): List of embbedings
        test (list): List of labels
@@ -43,6 +44,19 @@ def readFaces(file,model,tensor = False):
         
 
 def embeddings(file, model):
+    """
+    Creates an embedding of the image in the file
+    
+				Args:
+       file (str): Directory of the image
+       model (object): Model to do embeddings
+       tensor (bool): Returns embeddings as tensor, instead of numpy arrays
+    
+
+    Returns:
+    			embeddings (obj): Returns the embedding of the image in a numpy array or tensor 
+	
+    """
     img = Image.open(file).convert('RGB')
     img_tensor = transforms.functional.to_tensor(img)
     embedding = model(img_tensor.unsqueeze(0))[0]
