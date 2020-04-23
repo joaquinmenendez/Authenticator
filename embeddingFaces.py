@@ -1,0 +1,45 @@
+import os
+import argparse
+from facenet_pytorch import InceptionResnetV1
+from PIL import Image
+import re
+import torchvision.transforms as transforms
+
+parser = argparse.ArgumentParser() # Parser for command-line options
+parser.add_argument("file", help="Directory with the users and cropped images",type=str)
+parser.add_argument("--tensor", help="Returns embeddings as tensor, instead of numpy arrays",type=bool)
+
+def readFaces(file,model,tensor = False):
+    face_dict = {}
+    for roots,dirs,files in os.walk(file):
+        emb_list = []
+        for file in files:
+            if '.jpg' in file:
+                print(file)
+                path = os.path.join(roots,file)
+                img_emb = embeddings(path,model)
+                if not tensor:
+                    img_emb = img_emb.detach().numpy()
+                    emb_list.append(img_emb)
+        face_dict[re.sub("_.*$","",file)] = emb_list
+    train, label = [], []
+    for key, values in face_dict.items():
+        for val in values:
+            train.append(val)
+            label.append(key)
+    return train, label
+        
+
+def embeddings(file, model):
+    img = Image.open(file).convert('RGB')
+    img_tensor = transforms.functional.to_tensor(img)
+    embedding = model(img_tensor.unsqueeze(0))[0]
+    return embedding
+    
+def main():
+				resnet = InceptionResnetV1(pretrained='vggface2').eval()
+				args = parser.parse_args()
+				readFaces(args.file, resnet, args.tensor)
+
+if __name__ == "__main__":
+    main()
