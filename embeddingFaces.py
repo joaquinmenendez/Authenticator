@@ -10,6 +10,18 @@ parser.add_argument("file", help="Directory with the users and cropped images",t
 parser.add_argument("--tensor", help="Returns embeddings as tensor, instead of numpy arrays",type=bool)
 
 def readFaces(file,model,tensor = False):
+    """
+				Args:
+       file (str): Name of the directory that contains all images 
+       model (object): Model to do embeddings
+       --tensor (json): Returns embeddings as tensor, instead of numpy arrays
+    
+
+    Returns:
+       train (list): List of embbedings
+       test (list): List of labels
+				
+    """
     face_dict = {}
     for roots,dirs,files in os.walk(file):
         emb_list = []
