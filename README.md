@@ -37,3 +37,12 @@ The policy we used is in [`configuration_s3.json`](https://raw.githubusercontent
 
 **Step by step**<br>
 The script `pipeline_local.sh` took a video, took a frame every *n* frames, select only the face and save it. as a .jpg file
+
+
+**Lambda**
+Create a Lambda function that tooks a video in a bucket and generates images in a .jpg format in the same Bucket.
+The function can be called with a POST request.
+The folder `Lambdas` contains the `getVideo.py` script, a bash script `call_getVideo.sh` to send the POST request and a .json file with the fields you must complete to run the POST.
+
+[Tutorial creating layers fow Lambda](https://medium.com/@avijitsarkar123/how-lambda-layer-reduced-my-deployment-package-size-b571ebff79f1)
+[Tutorial POST Request](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-post-method-with-json-body-to-call-lambda-function)4
