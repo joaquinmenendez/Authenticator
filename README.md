@@ -41,8 +41,24 @@ The script `pipeline_local.sh` took a video, took a frame every *n* frames, sele
 
 **Lambda**
 Create a Lambda function that tooks a video in a bucket and generates images in a .jpg format in the same Bucket.
-The function can be called with a POST request.
-The folder `Lambdas` contains the `getVideo.py` script, a bash script `call_getVideo.sh` to send the POST request and a .json file with the fields you must complete to run the POST.
+The lambda function can be called with a POST request.
+The folder `Lambdas` contains the `getVideo.py` script that goes inside the Lambda function,
+a bash script `call_getVideo.sh` to send the POST request and a JSON file with the fields you must complete to run the POST.
+
+Skeleton of the JSON file: 
+```json
+{
+"AWS_ACCESS_KEY_ID" : " ",
+"AWS_SECRET_ACCESS_KEY" : " ",
+"REGION_NAME" : "us-east-1",
+"BUCKET_NAME" : " ",
+"PERSON_NAME" : " ",
+"KEY" : " ",
+"ROTATE" : "ROTATE_90_CLOCKWISE",
+"MOD_NUM" : 5 
+}
+```
 
 [Tutorial creating layers fow Lambda](https://medium.com/@avijitsarkar123/how-lambda-layer-reduced-my-deployment-package-size-b571ebff79f1)
-[Tutorial POST Request](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-post-method-with-json-body-to-call-lambda-function)4
+[Tutorial POST Request](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-post-method-with-json-body-to-call-lambda-function)
+[Tutorial create and test API getaway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-create-api-as-simple-proxy-for-lambda-test)
