@@ -14,7 +14,7 @@ def lambda_handler(event,context):
 	# TODO implement
 	event = dict(event)
 	get_video(event)
-	return ''
+	return  {"Status" : "Success"}
 
 
 def get_video(event):
