@@ -4,16 +4,12 @@ import os
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
 
-
-
-#Initialize variables
-app = Flask(__name__)
-
-#I need to work around this
-app.secret_key = "secret key" #Flask ask me for a key. 
+# Initialize variables
+app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
+app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['UPLOAD_FOLDER'] = './tmp'
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024 #50 mb 
-ALLOWED_EXTENSIONS = set(['jpg']) # Files allowed (check if PNG could work )
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
+ALLOWED_EXTENSIONS = set(['jpg'])  # Files allowed (check if PNG could work )
 
 
 #Handy functions
@@ -58,11 +54,8 @@ def train_page():
 ###############################################################################################################################*
 # Test page
 
-test_posts = [
-                {
-                "File" : "file_name"
-                }
-            ]
+test_posts = { "File" : None }
+
 @app.route('/test')
 def test_page():
     return render_template('test.html', posts = test_posts)
@@ -83,6 +76,7 @@ def upload_file():
 			filename = secure_filename(file.filename) 
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			flash('File successfully uploaded')
+			test_posts["file"] = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # Plot the file uploaded
 			return redirect('/test')
 		else:
 			flash('Allowed file types are: jpg')
@@ -92,10 +86,10 @@ def upload_file():
 # Will need a button here to say 'Test this person' 
 @app.route('/output')
 def output():
-    print(f'tmp/{filename}')
+    print('tmp/' + filename)
     j_embedding = preProcessPhoto(f'tmp/{filename}')
     content_page = f'The json file {j_embedding}'
-    return  content_page
+    return content_page
 
 ##############################################################################################################################
 # POST request to Amazon Sagemaker
