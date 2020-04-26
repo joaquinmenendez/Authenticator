@@ -2,6 +2,9 @@ import pandas as pd
 from flask import Flask, render_template, request, flash, redirect 
 import os
 from werkzeug.utils import secure_filename
+import cropFace
+import embeddingFaces
+import uploadToBucket
 
 #Initialize variables
 app = Flask(__name__)
@@ -21,12 +24,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def crop_embeed():
+def preProcessPhoto():
     return
 
 
-def upload_to_bucket():
-    return
 
 ###############################################################################################################################
 # Home page
