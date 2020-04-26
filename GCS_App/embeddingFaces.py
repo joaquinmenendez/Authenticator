@@ -2,6 +2,7 @@ import argparse
 from facenet_pytorch import InceptionResnetV1
 from PIL import Image
 import torchvision.transforms as transforms
+import json
 
 parser = argparse.ArgumentParser()  # Parser for command-line options
 parser.add_argument("file", help="Directory with the users and cropped images", type=str)
@@ -24,13 +25,16 @@ def embeddings(file, tensor=False):
     embedding = model(img_tensor.unsqueeze(0))[0]
     if not tensor:
         embedding = embedding.detach().numpy()
-    # print(embedding)
-    return embedding
+    dic = {}
+    dic["body"] = embedding.astype(float).tolist()
+    j_embedding = json.dumps(dic)
+    print (j_embedding)
+    return j_embedding
 
 
 def main():
     args = parser.parse_args()
-    embeddings(args.file, args.tensor)
+    return embeddings(args.file, args.tensor)
 
 
 if __name__ == "__main__":
