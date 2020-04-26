@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %} <h1> Train </h1> {% endblock title %}
+
+{% block content %} 
+    {% if posts[0] %}
+        {% for i in posts %}
+        <p> {{i}} </p>
+        {% endfor %}
+    {% else %}
+        <p>Please upload one file<p/>
+    {% endif %}
+{% endblock content %}
