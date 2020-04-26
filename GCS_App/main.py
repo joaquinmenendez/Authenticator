@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 #I need to work around this
 app.secret_key = "secret key" #Flask ask me for a key. 
-app.config['UPLOAD_FOLDER'] = './temp'
+app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024 #50 mb 
 ALLOWED_EXTENSIONS = set(['jpg']) # Files allowed (check if PNG could work )
 
@@ -34,10 +34,10 @@ def GET_probability(url, j_embedding):
 @app.route('/')
 @app.route('/home')
 def home_page():
-    return render_template('home.html')
+    return render_template('home.html')  # This would be Iuliias page
 ###############################################################################################################################
 
-
+# Train page
 train_post = [{ 
                 "video" : "video_file_name",
                 "person" : "person_name",
@@ -56,6 +56,8 @@ def train_page():
 
 
 ###############################################################################################################################*
+# Test page
+
 test_posts = [
                 {
                 "File" : "file_name"
@@ -81,14 +83,19 @@ def upload_file():
 			filename = secure_filename(file.filename) 
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			flash('File successfully uploaded')
-			return redirect('/describe')
+			return redirect('/test')
 		else:
-			flash('Allowed file types are csv')
+			flash('Allowed file types are: jpg')
 			return redirect(request.url)
 
 
 # Will need a button here to say 'Test this person' 
-
+@app.route('/output')
+def output():
+    print(f'tmp/{filename}')
+    j_embedding = preProcessPhoto(f'tmp/{filename}')
+    content_page = f'The json file {j_embedding}'
+    return  content_page
 
 ##############################################################################################################################
 # POST request to Amazon Sagemaker
