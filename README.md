@@ -59,6 +59,6 @@ Skeleton of the JSON file:
 }
 ```
 
-[Tutorial creating layers fow Lambda](https://medium.com/@avijitsarkar123/how-lambda-layer-reduced-my-deployment-package-size-b571ebff79f1)
-[Tutorial POST Request](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-post-method-with-json-body-to-call-lambda-function)
-[Tutorial create and test API getaway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-create-api-as-simple-proxy-for-lambda-test)
+- [Tutorial creating layers fow Lambda](https://medium.com/@avijitsarkar123/how-lambda-layer-reduced-my-deployment-package-size-b571ebff79f1)<br>
+- [Tutorial POST Request](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-post-method-with-json-body-to-call-lambda-function)<br>
+- [Tutorial create and test API getaway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-create-api-as-simple-proxy-for-lambda-test) <br>
