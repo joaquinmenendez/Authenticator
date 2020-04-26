@@ -2,8 +2,7 @@ flask==1.1.1
 pandas
 werkzeug
 matplotlib
-torchvision
-facenet_pytorch
 opencv-python
+torchvision
 numpy
 boto3
