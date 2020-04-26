@@ -24,4 +24,13 @@
 		<input type="submit" value="Upload">
 	</p>
 </form>
+
+    {% if posts["file"] %}
+    <img src="{{posts["file"]}}" alt="Image selected"/>
+    <form>
+      <button formaction="/output">Test this photo!</button>
+    </form>
+    {% endif %}
+
+
 {% endblock content %}
