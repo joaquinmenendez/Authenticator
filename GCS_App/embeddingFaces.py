@@ -26,7 +26,7 @@ def embeddings(file, tensor=False):
     if not tensor:
         embedding = embedding.detach().numpy()
     dic = {}
-    dic["body"] = embedding.astype(float).tolist()
+    dic["data"] = embedding.astype(float).tolist()
     j_embedding = json.dumps(dic)
     print (j_embedding)
     return j_embedding
