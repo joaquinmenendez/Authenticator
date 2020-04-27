@@ -3,6 +3,7 @@ from facenet_pytorch import InceptionResnetV1
 from PIL import Image
 import torchvision.transforms as transforms
 import json
+import numpy as np
 
 parser = argparse.ArgumentParser()  # Parser for command-line options
 parser.add_argument("file", help="Directory with the users and cropped images", type=str)
@@ -25,11 +26,12 @@ def embeddings(file, tensor=False):
     embedding = model(img_tensor.unsqueeze(0))[0]
     if not tensor:
         embedding = embedding.detach().numpy()
+    np.savetxt('tmp/data.csv', embedding.reshape(1, -1), delimiter=',')
     dic = {}
-    dic["data"] = embedding.astype(float).tolist()
-    # I use to use a JSON file but let's try with a dictionary    
-        # j_embedding = json.dumps(dic)
-    print (dic)
+    dic["data"] = embedding.reshape(1, -1).astype(float).tolist()
+    # I use to use a JSON file but let's try  returnin a dictionary    
+    j_embedding = json.dumps(dic)
+    print (j_embedding)
     return dic
 
 
