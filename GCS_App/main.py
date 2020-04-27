@@ -1,16 +1,19 @@
 import pandas as pd
 from flask import Flask, render_template, request, flash, redirect 
 import os
+from facenet_pytorch import InceptionResnetV1
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
 import json
 
-# Initialize variables
+# Initialize variables.
+# I did this already on `app.py` but just in case
 app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 ALLOWED_EXTENSIONS = set(['jpg'])  # Files allowed (check if PNG could work )
+MODEL = InceptionResnetV1(pretrained='vggface2').eval()
 
 
 #Handy functions
@@ -19,13 +22,7 @@ def allowed_file(filename):
     This function is used to determine if they uploaded file has the apropiate extension
     '''
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def GET_probability(url, j_embedding):
-    '''
-    Send a face embedding to the sagemaker model using the API getaway
-    '''
-    return
+    
 ###############################################################################################################################
 # Home page
 @app.route('/')
@@ -99,8 +96,8 @@ outputs_post = {
 @app.route('/output')
 def output():
 	global outputs_post
-	outputs_post["file"] = test_posts['file']
-	embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}')
+	outputs_post["file"] = test_posts['file'] #set the file
+	embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}',MODEL)
 	outputs_post['embedding'] = embedding['data']
 	return render_template('/output.html', posts=outputs_post)
 
@@ -116,6 +113,7 @@ api_posts = {
 
 @app.route('/api_output')
 def api_output():
+    global api_posts
     return render_template('api_output.html', posts=api_posts)
 
 
