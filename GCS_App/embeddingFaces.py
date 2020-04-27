@@ -26,7 +26,6 @@ def embeddings(file, model, tensor=False):
     embedding = model(img_tensor.unsqueeze(0))[0]
     if not tensor:
         embedding = embedding.detach().numpy()
-    np.savetxt('tmp/data.csv', embedding.reshape(1, -1), delimiter=',')
     dic = {}
     dic["data"] = embedding.reshape(1, -1).astype(float).tolist()
     # I use to use a JSON file but let's try  returnin a dictionary    
