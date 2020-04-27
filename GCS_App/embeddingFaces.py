@@ -10,7 +10,7 @@ parser.add_argument("file", help="Directory with the users and cropped images", 
 parser.add_argument("--tensor", help="Returns embeddings as tensor, instead of numpy arrays", type=bool)
 
 
-def embeddings(file, tensor=False):
+def embeddings(file, model, tensor=False):
     """
     Creates an embedding of the image in the file
     Args:
@@ -20,7 +20,7 @@ def embeddings(file, tensor=False):
         embeddings (obj): Returns the embedding of the image in a numpy array or tensor 
 
     """
-    model = InceptionResnetV1(pretrained='vggface2').eval()
+    #model = InceptionResnetV1(pretrained='vggface2').eval()  # I am calling this from preProcessPhoto.py
     img = Image.open(file).convert('RGB')
     img_tensor = transforms.functional.to_tensor(img)
     embedding = model(img_tensor.unsqueeze(0))[0]
@@ -30,7 +30,7 @@ def embeddings(file, tensor=False):
     dic = {}
     dic["data"] = embedding.reshape(1, -1).astype(float).tolist()
     # I use to use a JSON file but let's try  returnin a dictionary    
-    j_embedding = json.dumps(dic)
+    #j_embedding = json.dumps(dic)
     print (j_embedding)
     return dic
 
