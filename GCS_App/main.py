@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, flash, redirect
 import os
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
+import json
 
 # Initialize variables
 app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
@@ -54,17 +55,22 @@ def train_page():
 ###############################################################################################################################*
 # Test page
 
-test_posts = { "File" : None }
+test_posts = {
+				"file" : None,
+				"path" : None
+			}
 
 @app.route('/test')
 def test_page():
-    return render_template('test.html', posts = test_posts)
+    return render_template('test.html', posts=test_posts)
+
 
 @app.route('/test', methods=['POST'])
 def upload_file():
-	global filename #maybe there is a better way than using global, but it's the easier way now
+	global filename  # maybe there is a better way than using global, but it's the easier way now
+	global test_posts
 	if request.method == 'POST':
-        # check if the post request has the file part
+		# check if the post request has the file part
 		if 'file' not in request.files:
 			flash('No file part')
 			return redirect(request.url)
@@ -73,37 +79,44 @@ def upload_file():
 			flash('No file selected for uploading')
 			return redirect(request.url)
 		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename) 
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			flash('File successfully uploaded')
-			test_posts["file"] = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # Plot the file uploaded
+			test_posts['file'] = secure_filename(file.filename) 
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
+			flash(f'{ test_posts["file"]} successfully uploaded')
+			test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
 			return redirect('/test')
 		else:
 			flash('Allowed file types are: jpg')
 			return redirect(request.url)
+# Will need a button here to say 'Test this person'
 
 
-# Will need a button here to say 'Test this person' 
+outputs_post = {
+				"file" : None,
+                "embedding" : None
+                }
+
+
 @app.route('/output')
 def output():
-    print('tmp/' + filename)
-    j_embedding = preProcessPhoto(f'tmp/{filename}')
-    content_page = f'The json file {j_embedding}'
-    return content_page
+	global outputs_post
+	outputs_post["file"] = test_posts['file']
+	embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}')
+	outputs_post['embedding'] = embedding['data']
+	return render_template('/output.html', posts=outputs_post)
 
 ##############################################################################################################################
 # POST request to Amazon Sagemaker
 
-test_outpost_posts = {  
+api_posts = {  
                         "File": "File name",
-                        "Person": 'Person out from SM',
-                        "Accuracy": 'Accuracy from SM',
+                        "Person": 'Person out from SageMaker',
+                        "Accuracy": 'Accuracy from SageMaker',
                         "Role": "Role of the person from log"
                      }
 
-@app.route('/test_output')
-def test_output():
-    return render_template('test_output.html', posts = test_outpost_posts)
+@app.route('/api_output')
+def api_output():
+    return render_template('api_output.html', posts=api_posts)
 
 
 # Useful also to visualize locally
