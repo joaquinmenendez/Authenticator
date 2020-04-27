@@ -1,8 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-<h1>Hello</h1>
-</head>
+{% extends "layout.html" %}
+{% block title %} <title> Authentificator </title> {% endblock title %}
+
+{% block content %} 
+    <h2 style="text-align: center; color: #16167f; font-size:35px "><strong>Welcome to Authentificator!</a></strong></h2>\
+	<p style="text-align: center; font-size:25px "> Authentificator is a framework to train and deploy customized face recognition algorithms in an easy and fast way.</p>
+    <p style="text-align: center; font-size:25px "> You can use Authentificator to identify your team members and share the appropriate access rights to keep your business safe.</p>
+	<p style="text-align: center; font-size:25px "> 
+        <a target="_top"> 
+        <iframe src="https://www.youtube.com/embed/r5x1te9vxK4" text-align: center; width="853" height="480" frameborder="0" allowfullscreen></iframe>
+        <p style="text-align: center; font-size:25px "><strong> Teach the algortihm to recognize your team!</strong></p>
+        </a>
+
+    <form style="text-align: center">
+        <button formaction="/train"><p style="text-align: center; font-size:25px ">
+          <strong> Start Learning </strong></p>
+        </button>
+    </form>
 
 
-</html>
+{% endblock content %}
