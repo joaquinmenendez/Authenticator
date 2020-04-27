@@ -1,0 +1,7 @@
+steps: 
+  - 
+    args: 
+      - app
+      - deploy
+    name: gcr.io/cloud-builders/gcloud
+timeout: 1600s
