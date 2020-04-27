@@ -27,9 +27,10 @@ def embeddings(file, tensor=False):
         embedding = embedding.detach().numpy()
     dic = {}
     dic["data"] = embedding.astype(float).tolist()
-    j_embedding = json.dumps(dic)
-    print (j_embedding)
-    return j_embedding
+    # I use to use a JSON file but let's try with a dictionary    
+        # j_embedding = json.dumps(dic)
+    print (dic)
+    return dic
 
 
 def main():
