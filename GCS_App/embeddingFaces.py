@@ -31,7 +31,7 @@ def embeddings(file, model, tensor=False):
     dic["data"] = embedding.reshape(1, -1).astype(float).tolist()
     # I use to use a JSON file but let's try  returnin a dictionary    
     #j_embedding = json.dumps(dic)
-    print (j_embedding)
+    print ('Embeddings calculated')
     return dic
 
 
