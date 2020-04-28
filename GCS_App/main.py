@@ -1,11 +1,11 @@
 import pandas as pd
-from flask import Flask, render_template, request, flash, redirect 
+from flask import Flask, render_template, request, flash, redirect, url_for
 import os
 from facenet_pytorch import InceptionResnetV1
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
 import json
-from flask_nav import Nav
+
 
 # Initialize variables.
 # I did this already on `app.py` but just in case
@@ -17,7 +17,6 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 
 ALLOWED_EXTENSIONS = set(['jpg'])  # Files allowed (check if PNG could work )
 MODEL = InceptionResnetV1(pretrained='vggface2').eval()
-
 
 #Handy functions
 def allowed_file(filename):

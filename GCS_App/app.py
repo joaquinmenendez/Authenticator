@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_nav import Nav
+
 # Initialize variables
 
 app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
