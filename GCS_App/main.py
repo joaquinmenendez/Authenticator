@@ -5,13 +5,16 @@ from facenet_pytorch import InceptionResnetV1
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
 import json
+from flask_nav import Nav
 
 # Initialize variables.
 # I did this already on `app.py` but just in case
 app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
+nav = Nav(app)
 app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
+
 ALLOWED_EXTENSIONS = set(['jpg'])  # Files allowed (check if PNG could work )
 MODEL = InceptionResnetV1(pretrained='vggface2').eval()
 
@@ -64,26 +67,26 @@ def test_page():
 
 @app.route('/test', methods=['POST'])
 def upload_file():
-	global filename  # maybe there is a better way than using global, but it's the easier way now
-	global test_posts
-	if request.method == 'POST':
-		# check if the post request has the file part
-		if 'file' not in request.files:
-			flash('No file part')
-			return redirect(request.url)
-		file = request.files['file']
-		if file.filename == '':
-			flash('No file selected for uploading')
-			return redirect(request.url)
-		if file and allowed_file(file.filename):
-			test_posts['file'] = secure_filename(file.filename) 
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
-			flash(f'{ test_posts["file"]} successfully uploaded')
-			test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
-			return redirect('/test')
-		else:
-			flash('Allowed file types are: jpg')
-			return redirect(request.url)
+    global filename  # maybe there is a better way than using global, but it's the easier way now
+    global test_posts
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No file selected for uploading')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            test_posts['file'] = secure_filename(file.filename) 
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
+            flash(f'{ test_posts["file"]} successfully uploaded')
+            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
+            return redirect('/test')
+        else:
+            flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
+            return redirect(request.url)
 # Will need a button here to say 'Test this person'
 
 
