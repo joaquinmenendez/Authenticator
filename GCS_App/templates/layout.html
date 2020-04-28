@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Authentificator</title>
+   
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Personal CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css')}}">
+    
+    <!-- Title -->
+    <title>Authentificator</title>
 </head>
 <body>
     <header class="site-header">
-         <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-3" href="/"> Authentificator </a>
+                <a class="navbar-brand mr-4" href="/"> Authentificator </a>
                 <button class="navbar-toggler" type="button" data-toogle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,14 +36,12 @@
             </div>
         </nav>
     </header>
-<main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
+
+
           {% block title %}{% endblock title %}
           {% block content %}{% endblock %}
-        </div>
-        </div>
-</main>
+
+
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
