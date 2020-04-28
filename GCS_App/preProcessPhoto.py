@@ -26,6 +26,5 @@ def main():
     args = parser.parse_args()
     preProcessPhoto(args.file_path)
 
-
 if __name__ == '__main__':
     main()
