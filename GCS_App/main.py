@@ -4,26 +4,33 @@ import os
 from facenet_pytorch import InceptionResnetV1
 from werkzeug.utils import secure_filename
 from preProcessPhoto import preProcessPhoto
+from testPhoto import testPhoto
 import json
 
 
 # Initialize variables.
+# Create tmp folder with train and test         !!!!!!!!!!!!!
+
 # I did this already on `app.py` but just in case
-app = Flask(__name__,static_url_path = "/tmp", static_folder = "tmp")
+app = Flask(__name__, static_url_path="/tmp", static_folder = "tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 
-ALLOWED_EXTENSIONS = set(['jpg'])  # Files allowed (check if PNG could work )
-MODEL = InceptionResnetV1(pretrained='vggface2').eval()
+ALLOWED_IMAGES = set(['jpg'])  # Files allowed (check if PNG could work )
+ALLOWED_VIDEOS = set(['mp4'])  
+MODEL = InceptionResnetV1(pretrained='vggface2').eval() #Preload the resnet
 
-#Handy functions
-def allowed_file(filename):
+
+
+# Handy functions
+def allowed_file(filename, allowed):
     '''
     This function is used to determine if they uploaded file has the apropiate extension
     '''
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed
+
+
 ###############################################################################################################################
 # Home page
 @app.route('/')
@@ -32,31 +39,46 @@ def home_page():
     return render_template('home.html')  # This would be Iuliias page
 ###############################################################################################################################
 
+
 # Train page
-train_post = [{ 
-                "video" : "video_file_name",
-                "person" : "person_name",
-                "role" : "role"
-                },
-                { 
-                "video" : "ADDED_video_file_name",
-                "person" : "ADDED_person_name",
-                "role" : "ADDED_role"
-                }
-            ]
+train_post = {
+                "file": None,
+                "path": None,
+                "person": None,
+                "role": None
+              }
+
 
 @app.route('/train')
 def train_page():
     return render_template('train.html', posts=train_post)
 
 
+@app.route('/train', methods=['POST'])
+def upload_video():
+    global train_post
+    if request.method == 'POST':  # Check if the post request has the file part
+        file = request.files['file']
+        print(file)
+        if file and allowed_file(file.filename, ALLOWED_VIDEOS):
+            train_post['file'] = secure_filename(file.filename)  # Get file name
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'train/videos', train_post['file']))  # Save file on tmp folder
+            flash(f'{ train_post["file"]} successfully uploaded')
+            train_post["path"] = os.path.join(app.config['UPLOAD_FOLDER'], 'train/videos', train_post['file'])  # Store the path
+            return redirect('/train')
+        else:
+            flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
+            return redirect(request.url)
+
 ###############################################################################################################################*
 # Test page
 
+
 test_posts = {
-				"file" : None,
-				"path" : None
-			}
+            "file": None,
+            "path": None
+            }
+
 
 @app.route('/test')
 def test_page():
@@ -67,40 +89,42 @@ def test_page():
 def upload_file():
     global filename  # maybe there is a better way than using global, but it's the easier way now
     global test_posts
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+    test_posts['file'] = None  # Remove older files uploaded
+    if request.method == 'POST':  # Check if the post request has the file part
         file = request.files['file']
-        if file.filename == '':
-            flash('No file selected for uploading')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.filename, ALLOWED_IMAGES):
             test_posts['file'] = secure_filename(file.filename) 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
             flash(f'{ test_posts["file"]} successfully uploaded')
             test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
-            return redirect('/test')
+            return redirect(request.url)
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
             return redirect(request.url)
 # Will need a button here to say 'Test this person'
 
-
+#############################################################################################################################
 outputs_post = {
 				"file" : None,
-                "embedding" : None
+                "path": None,
+                "embedding" : None,
                 }
 
 
 @app.route('/output')
 def output():
-	global outputs_post
-	outputs_post["file"] = test_posts['file'] #set the file
-	embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}',MODEL)
-	outputs_post['embedding'] = embedding['data']
-	return render_template('/output.html', posts=outputs_post)
+    global outputs_post
+    outputs_post["file"] = test_posts['file'] #set the file
+    outputs_post["path"] = test_posts['path'] #set the file
+    try:
+        # embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}',MODEL)
+        key_sage = os.path.join('tmp/keys/sagemaker', os.listdir('tmp/keys/sagemaker')[0])
+        post_response  = testPhoto(outputs_post["path"], keys=key_sage , model=MODEL)
+        outputs_post['embedding'] = post_response
+        return render_template('/output.html', posts=outputs_post)
+    except: 
+        outputs_post["embedding"] = 'ERROR'
+        return render_template('/output.html', posts=outputs_post)
 
 ##############################################################################################################################
 # POST request to Amazon Sagemaker
