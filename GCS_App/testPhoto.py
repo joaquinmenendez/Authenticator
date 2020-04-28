@@ -10,7 +10,7 @@ parser.add_argument("--keys", help="File with the keys to connect to SageMaker",
 MODEL = InceptionResnetV1(pretrained='vggface2').eval()
 
 def testPhoto(file_path, keys , model):
-    embedding =    preProcessPhoto(file_path, model)
+    embedding = preProcessPhoto(file_path, model)
     post_return = endpointConnection(embedding['data'], keys)
     print(post_return)
 
