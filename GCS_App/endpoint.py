@@ -30,7 +30,7 @@ def endpointConnection(array, keys = None):
                           aws_secret_access_key = keys["AWS_SECRET_ACCESS_KEY"], 
                           region_name = keys["REGION_NAME"]
                           )
-    response = runtime.invoke_endpoint(EndpointName="sagemaker-scikit-learn-2020-04-27-18-11-39-809",
+    response = runtime.invoke_endpoint(EndpointName=keys["ENDPOINT_NAME"],
                                        ContentType = 'application/x-npy',
                                        Body=npy)
     return response['Body'].read().decode()
