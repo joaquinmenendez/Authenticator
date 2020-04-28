@@ -1,36 +1,41 @@
 {% extends "layout.html" %}
-{% block title %} <h1> Test </h1> {% endblock title %}
+
+{% block title %} <center>
+                    <h1> Test </h1> 
+                  </center>  
+{% endblock title %}
 
 {% block content %} 
-<p>Upload something</p>
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
-<form method="post" action="/test" enctype="multipart/form-data">
-    <dl>
-		<p>
-			<input type="file" name="file" autocomplete="off" required>
-		</p>
-    </dl>
-    <p>
-		<input type="submit" value="Upload">
-	</p>
-</form>
+    <center>
+    <p>Upload something</p>
 
-    {% if posts["file"] %}
-    <img src="{{posts["path"]}}" alt="Image selected"/>
-    <form>
-      <button formaction="/output">Test this photo!</button>
+    <form method="post" action="/test" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" autocomplete="off" required>
+                <input type="submit" value="Upload">
+                <p>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class=flashes>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% endwith %}
+                </p>
+            </p>
+        </dl>
+
     </form>
-    {% endif %}
 
-
+        {% if posts["file"] %}
+        <form>
+        <button formaction="/output">Test this photo!</button>
+        </form>
+        <br>
+        <img src="{{posts["path"]}}" alt="Image selected" ; width="400" height="400"/>
+        {% endif %}
+    </center>
 {% endblock content %}
