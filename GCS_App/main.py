@@ -44,9 +44,9 @@ def home_page():
 train_post = {
                 "file": None,
                 "path": None,
-                "person": None,
+                "name": None,
                 "role": None
-              }
+            }
 
 
 @app.route('/train')
@@ -107,39 +107,44 @@ def upload_file():
 outputs_post = {
 				"file" : None,
                 "path": None,
-                "embedding" : None,
+                "name": None,
+                "accuracy": None,
+                "role": None
                 }
 
 
 @app.route('/output')
 def output():
     global outputs_post
-    outputs_post["file"] = test_posts['file'] #set the file
-    outputs_post["path"] = test_posts['path'] #set the file
+    outputs_post["file"] = test_posts['file'] # set the file
+    outputs_post["path"] = test_posts['path'] # set the file
     try:
         # embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}',MODEL)
         key_sage = os.path.join('tmp/keys/sagemaker', os.listdir('tmp/keys/sagemaker')[0])
         post_response  = testPhoto(outputs_post["path"], keys=key_sage , model=MODEL)
-        outputs_post['embedding'] = post_response
+        outputs_post['name'] = post_response['prediction']
+        outputs_post['accuracy'] = post_response['proba']
+        outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
         return render_template('/output.html', posts=outputs_post)
     except: 
-        outputs_post["embedding"] = 'ERROR'
+        outputs_post["name"] = 'ERROR'
         return render_template('/output.html', posts=outputs_post)
 
+def get_role(name, train_post):
+    '''
+    Search for a name in a list of dictionaries
+    :return:
+    res (dict): Dictionary that matches the name
+    '''
+    res = None
+    for sub in train_post: 
+        if sub['name'] == name: 
+            res = sub 
+            return res
+
+
+
 ##############################################################################################################################
-# POST request to Amazon Sagemaker
-
-api_posts = {  
-                        "File": "File name",
-                        "Person": 'Person out from SageMaker',
-                        "Accuracy": 'Accuracy from SageMaker',
-                        "Role": "Role of the person from log"
-                     }
-
-@app.route('/api_output')
-def api_output():
-    global api_posts
-    return render_template('api_output.html', posts=api_posts)
 
 
 # Useful also to visualize locally
