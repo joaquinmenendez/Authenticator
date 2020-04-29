@@ -4,7 +4,13 @@ from sagemaker import get_execution_role
 import boto3
 import argparse
 
-
+keys = {'AWS_ACCESS_KEY_ID': "AKIA2IYON5X7ZPBQOOJV",
+        "AWS_SECRET_ACCESS_KEY": "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",
+        "REGION_NAME": "us-east-1",
+        "ROLE":"arn:aws:iam::706015522303:role/sagemaker-role",
+        "ENDPOINT_NAME" : "SVM-image-classifier-2020-04",
+        "BUCKET_NAME": "video-facerecogproj"
+        }
 
 parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("keys", help = "Name of the bucket to download from", type = str)
@@ -13,6 +19,7 @@ parser.add_argument("--instance_count", help = "Directory to store the video", t
 parser.add_argument("--update", help = "Update should be true if there is the endpoint is already open", type = bool) 
 parser.add_argument("--model_path", help = "File with access keys", type = str) 
 parser.add_argument("--hyperparms", help = "Hyperparameters for SVM", type = str) # Default is None
+parser.add_argument("--bucket_name", help = "Bucket in which the data is stored", type = str)
 parser.add_argument("--key_bucket", help = "Key of the pickle data with the data", type = str) 
 
 def train_deploy_model(keys,
@@ -27,12 +34,10 @@ def train_deploy_model(keys,
 
     Args:
        keys (json): Json with credential keys
-       instance (str): Instance type to train model and deploy it
-       instance_count (int): Initial instance count for deploying the model
-       update (bool): Update should be true if there is the endpoint is already open
+       instance (str): instance type to train model and deploy it
+       instance_count (int): initial instance count for deploying the model
        model_path (str): Directory path where the model is located
        hyperparms (dictionary): Hyperparameters for SVM
-       key_buket (str): Key of the pickle data with the data
     
     Returns:
        Print statement
@@ -63,13 +68,13 @@ def train_deploy_model(keys,
   try:
     predictor = sklearn.deploy(initial_instance_count = instance_count,
                               instance_type= instance,
-                              endpoint_name = keys[endpoint_name],
+                              endpoint_name = keys["ENDPOINT_NAME"],
                               update_endpoint = update
                                   )
   except:
     print("The model was not deployed")
   
-  return print("Endpoint updated: {}".format(endpoint_name))
+  return print("Endpoint updated: {}".format(keys["ENDPOINT_NAME"]))
 
 def main():
     args = parser.parse_args()
