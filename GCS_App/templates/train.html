@@ -5,18 +5,6 @@
  {% endblock title %}
 
 {% block content %} 
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
-
 <center>
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
@@ -27,17 +15,29 @@
                 <input type="submit" value="Upload">
 
             </p>
-        </dl>   
+        </dl>
+        <p>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+        </p>   
         <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
         <br>
     </form>
     <br>
     <form style="text-align: center">
-        <button formaction="/training">
+        <button formaction="/preprocess">
             <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
-                <strong> Train the model </strong>
+                <strong> Preprocess data </strong>
             </p>
         </button>
     </form>
 </center>
+<br>
 {% endblock content %}
