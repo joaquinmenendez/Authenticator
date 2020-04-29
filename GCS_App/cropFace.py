@@ -28,8 +28,14 @@ def crop(input_img):
 
 def cropFace(input_img, output_img=None):
     '''
+    The function took a picture and crop the face.
+
     :params:
+        input_img (str) : Path to image
+        output_img (str) : Path to output
+
     :return:
+        None
     '''
     if output_img is None:
         return crop(input_img)
