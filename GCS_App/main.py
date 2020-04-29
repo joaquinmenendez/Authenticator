@@ -14,13 +14,9 @@ import json
 import shutil
 
 
-
-
 # Initialize variables.
-# Create tmp folder with train and test         !!!!!!!!!!!!!
-
 # I did this already on `app.py` but just in case
-app = Flask(__name__, static_url_path="/tmp", static_folder = "tmp")
+app = Flask(__name__, static_url_path = "/tmp", static_folder = "tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
@@ -28,7 +24,6 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 ALLOWED_IMAGES = set(['jpg'])  # Files allowed (check if PNG could work )
 ALLOWED_VIDEOS = set(['mp4'])  
 MODEL = InceptionResnetV1(pretrained='vggface2').eval() #Preload the resnet
-
 
 
 # Handy functions
@@ -159,9 +154,9 @@ def upload_file():
         file = request.files['file']
         if file and allowed_file(file.filename, ALLOWED_IMAGES):
             test_posts['file'] = secure_filename(file.filename) 
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],'test', test_posts['file']))
             flash(f'{ test_posts["file"]} successfully uploaded')
-            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
+            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'],'test', test_posts['file'])  # Plot the file uploaded
             return redirect(request.url)
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
