@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
-{% block title %} <center>
-                    <h1> Test </h1> 
-                  </center>  
+{% block title %} 
+<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+    <strong>Test your model</a></strong>
+</h2>
 {% endblock title %}
 
 {% block content %} 
@@ -19,7 +20,7 @@
                     {% if messages %}
                         <ul class=flashes>
                         {% for message in messages %}
-                        <li>{{ message }}</li>
+                        <p  style="text-align: center; font-size:35px ; color: #16167f;"><li>{{ message }}</li></p>
                         {% endfor %}
                         </ul>
                     {% endif %}

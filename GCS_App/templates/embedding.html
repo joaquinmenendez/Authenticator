@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+    <strong> Embeddings created!</strong>
+</h2>
+{% endblock title %}
+
+{% block content %} 
+ <p style="text-align: center; font-size:25px "> Embeddings on the bucket </p>
+
+<form method="get" action="tmp/train/embeddings/data.pickle">
+   <button type="submit">Download!</button>
+</form>
+
+<form style="text-align: center">
+    <button formaction="/loading">
+        <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
+            <strong> Train the model </strong>
+        </p>
+    </button>
+</form>
+ {% endblock content %} 

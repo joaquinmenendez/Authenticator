@@ -2,6 +2,7 @@ import argparse
 from facenet_pytorch import MTCNN
 import cv2
 from matplotlib import pyplot as plt
+import os
 
 parser = argparse.ArgumentParser()  # Parser for command-line options
 parser.add_argument("input_img", help="Directory file of the image to crop", type=str)
@@ -25,26 +26,23 @@ def crop(input_img):
     return img_cropped
 
 
-def plot_crop_face(img_cropped, output_img):
-    '''
-    :params:
-    :return:
-    '''
-    plt.imshow(img_cropped)
-    plt.axis('off')
-    plt.savefig(output_img)  # THIS SHOULD SAVE THE IMAGE IN TMP
-
-
 def cropFace(input_img, output_img=None):
     '''
+    The function took a picture and crop the face.
+
     :params:
+        input_img (str) : Path to image
+        output_img (str) : Path to output
+
     :return:
+        None
     '''
     if output_img is None:
         return crop(input_img)
     else:
         img_cropped = crop(input_img)
-        plot_crop_face(img_cropped, output_img)
+        cv2.imwrite(output_img, img_cropped)
+        print(f'Image saved in: {output_img}')
 
 
 def main():

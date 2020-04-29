@@ -1,38 +1,43 @@
 {% extends "layout.html" %}
+
 {% block title %} 
-<h3 style="text-align: center; color: #16167f; font-size:35px "><strong>Upload the videos</a></strong></h3> 
+<h2 style="text-align: center; color: #16167f; font-size:35px "><strong>Upload the videos</a></strong></h2> 
  {% endblock title %}
 
 {% block content %} 
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
 <center>
-<form method="post" action="/train" enctype="multipart/form-data">
-    <dl>
-		<p>
-            <input style="text-align: center;  type="file" name="file";  required value = "Name" >
-            <input style="text-align: center; type="file" name="file";  required value = "Role">
-            <input type="file" name="file" autocomplete="off" required>
-            <input type="submit" value="Upload">
+    <form method="post" action="/train" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input style="text-align: center;  type="file" name="file";  required value = "Name" >
+                <input style="text-align: center; type="file" name="file";  required value = "Role">
+                <input type="file" name="file" autocomplete="off" required>
+                <input type="submit" value="Upload">
 
-		</p>
-    </dl>   
-
-    <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
-    </br>
-    <p style="text-align: center; font-size:35px "> 
-        <a target="_top"> 
-    <p style="text-align: center; font-size:35px; color: #16167f; ">
-        <strong>Train the model!</strong></a></p>'
-</form>
+            </p>
+        </dl>
+        <p>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+        </p>   
+        <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
+        <br>
+    </form>
+    <br>
+    <form style="text-align: center">
+        <button formaction="/preprocess">
+            <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
+                <strong> Preprocess data </strong>
+            </p>
+        </button>
+    </form>
 </center>
+<br>
 {% endblock content %}

@@ -28,10 +28,7 @@ def embeddings(file, model, tensor=False):
         embedding = embedding.detach().numpy()
     dic = {}
     dic["data"] = embedding
-    # I use to use a JSON file but let's try  returnin a dictionary    
-    #j_embedding = json.dumps(dic)
     print ('Embeddings calculated')
-    print(type(dic['data']))
     return dic
 
 
