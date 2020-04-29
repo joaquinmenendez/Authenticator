@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+    <strong>Preprocess completed</strong>
+</h2>
+{% endblock title %}
+
+{% block content %} 
+ <p style="text-align: center; font-size:25px "> Would change this in the future. now i have two options</p>
+<div>
+    <p> Dowload faces </p>  
+
+    <form style="text-align: center" method="get" action="tmp/zip_files/faces.zip">
+        <button type="submit">Download the cropped faces</button>
+    </form>
+
+<div>
+<br>
+<div>
+    <p> Applying embeddings </p>  
+    <form style="text-align: center">
+        <button formaction="/embedding">
+            <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
+                <strong> Embeddings </strong>
+            </p>
+        </button>
+    </form>
+<div>
+
+ {% endblock content %} 
