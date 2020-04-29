@@ -4,14 +4,6 @@ from sagemaker import get_execution_role
 import boto3
 import argparse
 
-keys = {'AWS_ACCESS_KEY_ID': "AKIA2IYON5X7ZPBQOOJV",
-        "AWS_SECRET_ACCESS_KEY": "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",
-        "REGION_NAME": "us-east-1",
-        "ROLE":"arn:aws:iam::706015522303:role/sagemaker-role",
-        "ENDPOINT_NAME" : "SVM-image-classifier-2020-04",
-        "BUCKET_NAME": "video-facerecogproj"
-        }
-
 parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("keys", help = "Name of the bucket to download from", type = str)
 parser.add_argument("--instance", help = "Name of the video inside the bucket", type = str)
