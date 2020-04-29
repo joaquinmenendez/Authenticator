@@ -11,7 +11,6 @@ parser.add_argument("--instance_count", help = "Directory to store the video", t
 parser.add_argument("--update", help = "Update should be true if there is the endpoint is already open", type = bool) 
 parser.add_argument("--model_path", help = "File with access keys", type = str) 
 parser.add_argument("--hyperparms", help = "Hyperparameters for SVM", type = str) # Default is None
-parser.add_argument("--bucket_name", help = "Bucket in which the data is stored", type = str)
 parser.add_argument("--key_bucket", help = "Key of the pickle data with the data", type = str) 
 
 def train_deploy_model(keys,
