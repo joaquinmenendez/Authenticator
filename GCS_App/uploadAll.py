@@ -5,8 +5,8 @@ import json
 
 
 parser = argparse.ArgumentParser() # Parser for command-line options
-parser.add_argument("path", help="Directory where the files are located",type=str)
-parser.add_argument("upload_location", help="The new path where the files are being upload",type=str)
+parser.add_argument("path", help="Directory where the files are located", type=str)
+parser.add_argument("upload_location", help="The new path where the files are being upload", type=str)
 parser.add_argument("keys", help="file with access keys", type=str)
 
 
