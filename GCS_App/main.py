@@ -14,15 +14,16 @@ import json
 import shutil
 
 
+
+
 # Initialize variables.
 # I did this already on `app.py` but just in case
 app = Flask(__name__, static_url_path = "/tmp", static_folder = "tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
-app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 
-ALLOWED_IMAGES = set(['jpg'])  # Files allowed (check if PNG could work )
-ALLOWED_VIDEOS = set(['mp4'])  
+ALLOWED_IMAGES = set(['jpg', 'jpeg'])  # Files allowed (check if PNG could work)
+ALLOWED_VIDEOS = set(['mp4', 'mov'])
 MODEL = InceptionResnetV1(pretrained='vggface2').eval() #Preload the resnet
 
 
@@ -62,6 +63,7 @@ def train_page():
 @app.route('/train', methods=['POST'])
 def upload_video():
     global train_post
+    app.config['UPLOAD_FOLDER'] = './tmp/train/videos'
     if request.method == 'POST':  # Check if the post request has the file part
         file = request.files['file']
         print(file)
@@ -72,9 +74,9 @@ def upload_video():
             ### CREATE A NEW SLOT ON TRAIN POST(SEE PARAMETERS ABOVE)
             ### MAYBE UPDATE A COUNTER FOR EVERY VIDEO UPLOADED
             train_post[0]['file'] = secure_filename(file.filename)  # Get file name
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'train/videos', train_post[0]['file']))  # Save file on tmp folder
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],  train_post[0]['file']))  # Save file on tmp folder
             flash(f'{ train_post[0]["file"]} successfully uploaded')
-            train_post[0]["path"] = os.path.join(app.config['UPLOAD_FOLDER'], 'train/videos', train_post[0]['file'])  # Store the path
+            train_post[0]["path"] = os.path.join(app.config['UPLOAD_FOLDER'],  train_post[0]['file'])  # Store the path
             return redirect('/train')
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
@@ -147,21 +149,21 @@ def test_page():
 
 @app.route('/test', methods=['POST'])
 def upload_file():
-    global filename  # maybe there is a better way than using global, but it's the easier way now
+    app.config['UPLOAD_FOLDER'] = './tmp/test'
     global test_posts
     test_posts['file'] = None  # Remove older files uploaded
     if request.method == 'POST':  # Check if the post request has the file part
         file = request.files['file']
         if file and allowed_file(file.filename, ALLOWED_IMAGES):
             test_posts['file'] = secure_filename(file.filename) 
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'],'test', test_posts['file']))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
             flash(f'{ test_posts["file"]} successfully uploaded')
-            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'],'test', test_posts['file'])  # Plot the file uploaded
+            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
             return redirect(request.url)
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
             return redirect(request.url)
-# Will need a button here to say 'Test this person'
+
 
 #############################################################################################################################
 outputs_post = {
