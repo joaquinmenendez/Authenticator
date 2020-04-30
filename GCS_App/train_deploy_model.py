@@ -3,6 +3,7 @@ import sagemaker
 from sagemaker import get_execution_role
 import boto3
 import argparse
+import json
 
 parser = argparse.ArgumentParser() # Parser for command-line options
 parser.add_argument("keys", help = "Name of the bucket to download from", type = str)
@@ -18,7 +19,7 @@ def train_deploy_model(keys,
                   instance_count = 1, # Don't change this!
                   model_path = '/content/model/model.py',
                   key_bucket = 'data/data.pickle',
-                  update = True, # This should be always true if there is an open endpoint
+                  update = False, # This should be always true if there is an open endpoint
                   hyperparms = None):
   """
   This function trains a sagemaker model and deploys it.
@@ -52,7 +53,7 @@ def train_deploy_model(keys,
       hyperparameters= hyperparms
   )
   ## Data for training 
-  inputs = sagemaker_session.upload_data(path='data', key_prefix=key_bucket, bucket=keys["BUCKET_NAME"])
+  inputs = sagemaker_session.upload_data(path='tmp/data', key_prefix=key_bucket, bucket=keys["BUCKET_NAME"])
   ## Training the model
   sklearn.fit({'train': inputs})
   ## Deploying the model
