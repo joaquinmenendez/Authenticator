@@ -12,6 +12,7 @@ parser.add_argument("keys", help="File with the keys to connect to SageMaker", t
 def testPhoto(file_path, keys , model):
     embedding = preProcessPhoto(file_path, model)
     post_return = endpointConnection(embedding['data'], keys)
+    print(post_return)
     return post_return
 
 
