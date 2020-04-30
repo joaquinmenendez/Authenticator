@@ -110,7 +110,6 @@ def upload_to_bucket():
 
 @app.route('/embedding')
 def embedding():
-    keys_path = os.listdir('tmp/keys/s3')[0]  # Assuming an unique file
     label_embedding = {'data':[], 'label':[]}
     path = 'tmp/train/faces'
     faces = os.listdir('tmp/train/faces')
@@ -123,16 +122,13 @@ def embedding():
     # Save this dictionary as a binary object
     with open('tmp/train/embeddings/data.pickle', 'wb') as handle:
         pickle.dump(label_embedding, handle, protocol=pickle.HIGHEST_PROTOCOL)
-#    #Upload the pickle object to the bucket                                                       ############### This should be choosen by the user
-#    upload_location = 'DESDE_FLASK/Embeddings'
-#    uploadAll('tmp/train/embeddings', upload_location, os.path.join('tmp/keys/s3', keys_path))
     return render_template('embedding.html')
 
 
 @app.route('/deploy')
 def deploy():
     key = os.listdir('tmp/keys/sagemaker')[0]
-    train_deploy_model(keys=key)
+    train_deploy_model(keys= os.path.join('tmp/keys/sagemaker',key))
     return render_template('deploy.html')
 
 ################################################################################################################################
@@ -240,29 +236,6 @@ def about():
     return render_template('about.html')
 
 
-# Useful also to visualize locally
+# Run main 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Viejo no sirve mas
-
-@app.route('/upload')
-def uploaded():
-    path = 'tmp/train/faces'
-    upload_location = 'DESDE_FLASK/Faces'                                      ############### This should be choosen by the user
-    keys_path = os.listdir('tmp/keys/s3')[0]  # Assuming an unique file
-    uploadAll(path, upload_location, os.path.join('tmp/keys/s3',keys_path))
-    return render_template('upload.html')
