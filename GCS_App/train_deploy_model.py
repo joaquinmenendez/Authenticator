@@ -18,7 +18,7 @@ def train_deploy_model(keys,
                   instance = 'ml.m4.xlarge', # Don't change this!
                   instance_count = 1, # Don't change this!
                   model_path = 'tmp/model/model.py',
-                  key_bucket = 'tmp/data/data.pickle',
+                  key_bucket = 'tmp/train/embeddings',  # It was: tmp/data/data.pickle. data.pickle is harcoded inside the function
                   update = False, # This should be always true if there is an open endpoint
                   hyperparms = None):
   """
