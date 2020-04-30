@@ -9,14 +9,14 @@
 {% block content %} 
  <p style="text-align: center; font-size:25px "> Embeddings on the bucket </p>
 
-<form method="get" action="tmp/train/embeddings/data.pickle">
-   <button type="submit">Download!</button>
+<form style="text-align: center" method="get" action="tmp/train/embeddings/data.pickle">
+   <button type="submit">Download the embeddings!</button>
 </form>
 
 <form style="text-align: center">
-    <button formaction="/loading">
+    <button formaction="/deploy">
         <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
-            <strong> Train the model </strong>
+            <strong>Train and deploy the model</strong>
         </p>
     </button>
 </form>
