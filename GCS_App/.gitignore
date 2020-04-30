@@ -1,5 +1,11 @@
 __pycache__
 .myenv
 tmp/keys
+tmp/train/embeddings/*
+tmp/train/faces/*
+tmp/train/frames/*
+tmp/zip_files/*
+tmp/test/*
+
 *keys.json
 
