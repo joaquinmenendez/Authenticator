@@ -4,6 +4,7 @@ tmp/keys
 tmp/train/embeddings/*
 tmp/train/faces/*
 tmp/train/frames/*
+tmp/train/videos/*
 tmp/zip_files/*
 tmp/test/*
 
