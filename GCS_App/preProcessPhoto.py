@@ -17,8 +17,8 @@ def preProcessPhoto(file_path, model):
     '''
     name_file = file_path.split('/')[-1]  # Get the name of the file
     print(f'Processing: {name_file}')
-    cropFace(file_path, output_img = f'tmp/Cropped_{name_file}', color = 'RGB')  # Crop the face. color (str) : BGR is default in cropFace.py. Choose 'RGB' to overwrite"
-    j_embedding = embeddings(f'tmp/Cropped_{name_file}', model=model, tensor=False)  # Get the embedding of the face
+    cropFace(file_path, output_img = f'tmp/test/Cropped_{name_file}', color = 'RGB')  # Crop the face. color (str) : BGR is default in cropFace.py. Choose 'RGB' to overwrite"
+    j_embedding = embeddings(f'tmp/test/Cropped_{name_file}', model=model, tensor=False)  # Get the embedding of the face
     return j_embedding
 
 
