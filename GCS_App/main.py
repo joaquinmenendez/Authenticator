@@ -9,6 +9,7 @@ from embeddingFaces import embeddings
 from video2frame import video2frame
 from testPhoto import testPhoto
 from cropFace import cropFace
+from train_deploy_model import train_deploy_model
 import pickle
 import json
 import shutil
@@ -122,14 +123,16 @@ def embedding():
     # Save this dictionary as a binary object
     with open('tmp/train/embeddings/data.pickle', 'wb') as handle:
         pickle.dump(label_embedding, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    #Upload the pickle object to the bucket                                                       ############### This should be choosen by the user
+#    #Upload the pickle object to the bucket                                                       ############### This should be choosen by the user
 #    upload_location = 'DESDE_FLASK/Embeddings'
 #    uploadAll('tmp/train/embeddings', upload_location, os.path.join('tmp/keys/s3', keys_path))
     return render_template('embedding.html')
 
 
 @app.route('/deploy')
-def deploy(): 
+def deploy():
+    key = os.listdir('tmp/keys/sagemaker')[0]
+    train_deploy_model(keys=key)
     return render_template('deploy.html')
 
 ################################################################################################################################
@@ -166,6 +169,9 @@ def upload_file():
 
 
 #############################################################################################################################
+# Output from Test
+
+
 outputs_post = {
 				"file" : None,
                 "path": None,
@@ -185,7 +191,6 @@ def output():
         post_response = testPhoto(outputs_post["path"], keys=key_sage, model=MODEL)
     except: 
         outputs_post["name"] = 'ERROR'
-        assert False, 'errrrrrror'
         return render_template('output.html', posts=outputs_post)
 
     post_response = json.loads(post_response)  # Convert the string dictionary into a real dictionary
