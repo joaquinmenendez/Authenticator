@@ -7,8 +7,8 @@
 {% block content %} 
 <center>
    <p>
-    For every video you shoul assign a name and a role. <br>
-    If the video was filmed on an Android device check the 'Rotate image counter clockwise' checkbox.
+    For every video you should assign a name and a role. <br>
+    If the video was filmed on an Android device check the 'Rotate image counter clockwise' checkbox.<br>
     After uploading all your video click on 'Preprocess data'.
    </p>
     <form method="post" action="/train" enctype="multipart/form-data">
@@ -57,16 +57,19 @@
         <!-- 
             <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
          -->
-        
     </form>
+    
     <br>
-    <form style="text-align: center">
-        <button formaction="/preprocess">
-            <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
-                <strong> Preprocess data </strong>
-            </p>
-        </button>
-    </form>
+        <form method="post" action="/preprocess/">
+            <button name="preprocess_button" type="submit">Preprocess data </button>
+        </form>
+    <br>
+        {% if finish_preprocess == True %}
+        <form style="text-align: center">
+            <button formaction="/preprocess">
+                <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px "><strong> Next </strong></p>
+            </button>
+        </form>
+        {% endif %}
 </center>
-<br>
 {% endblock content %}
