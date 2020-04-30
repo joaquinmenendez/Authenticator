@@ -6,4 +6,4 @@ opencv-python
 torchvision
 numpy
 boto3
-flask_nav
+sagemaker
