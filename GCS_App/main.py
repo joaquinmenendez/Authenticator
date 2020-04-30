@@ -13,20 +13,23 @@ from train_deploy_model import train_deploy_model
 import pickle
 import json
 import shutil
-
+import copy
+import time
 
 
 
 # Initialize variables.
 # I did this already on `app.py` but just in case
-app = Flask(__name__, static_url_path = "/tmp", static_folder = "tmp")
+app = Flask(__name__, static_url_path="/tmp", static_folder="tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 mb
 
 ALLOWED_IMAGES = set(['jpg', 'jpeg'])  # Files allowed (check if PNG could work)
 ALLOWED_VIDEOS = set(['mp4', 'mov'])
-MODEL = InceptionResnetV1(pretrained='vggface2').eval() #Preload the resnet
 
+#GLOBAL VARIABLES
+MODEL = InceptionResnetV1(pretrained='vggface2').eval()  # Preload the resnet
+COUNTER = 0
 
 # Handy functions
 def allowed_file(filename, allowed):
@@ -45,39 +48,46 @@ def home_page():
 ###############################################################################################################################
 # Train page
 
-train_post = [
-                {
+train_post = []
+
+train_dict = {
                 "file": None,
                 "path": None,
                 "name": "Joaquin",
                 "role": "Accesso",
                 "rotate": "ROTATE_90_COUNTERCLOCKWISE"
-                }
-            ]
+            }
 
 
 @app.route('/train')
 def train_page():
-    return render_template('train.html')
+    return render_template('/train.html', posts=train_post)
 
 
 @app.route('/train', methods=['POST'])
 def upload_video():
-    global train_post
+    global train_pos
+    global COUNTER
     app.config['UPLOAD_FOLDER'] = './tmp/train/videos'
     if request.method == 'POST':  # Check if the post request has the file part
         file = request.files['file']
         print(file)
-        ######## HARDCODING CHANGE THIS LATER
-        #  train_post[0]
-        ############### HARCODED
         if file and allowed_file(file.filename, ALLOWED_VIDEOS):
             ### CREATE A NEW SLOT ON TRAIN POST(SEE PARAMETERS ABOVE)
-            ### MAYBE UPDATE A COUNTER FOR EVERY VIDEO UPLOADED
-            train_post[0]['file'] = secure_filename(file.filename)  # Get file name
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'],  train_post[0]['file']))  # Save file on tmp folder
-            flash(f'{ train_post[0]["file"]} successfully uploaded')
-            train_post[0]["path"] = os.path.join(app.config['UPLOAD_FOLDER'],  train_post[0]['file'])  # Store the path
+            train_post.append(copy.deepcopy(train_dict))
+            ### UPDATE PARMATERS AND COUNTER FOR EVERY VIDEO UPLOADED
+            train_post[COUNTER]['file'] = secure_filename(file.filename)  # Get file name
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],  train_post[COUNTER]['file']))  # Save file on tmp folder
+            flash(f'{ train_post[COUNTER]["file"]} successfully uploaded')
+            train_post[COUNTER]["path"] = os.path.join(app.config['UPLOAD_FOLDER'], train_post[COUNTER]['file'])  # Store the path
+            train_post[COUNTER]["name"] = request.form['fname']
+            train_post[COUNTER]["role"] = request.form['frole'] 
+            # check for rotation
+            if request.form.get('frotate') is None: 
+                train_post[COUNTER]["rotate"] = 'ROTATE_90_CLOCKWISE'
+            else:
+                train_post[COUNTER]["rotate"] = request.form.get('frotate')
+            COUNTER += 1
             return redirect('/train')
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
@@ -88,17 +98,23 @@ def upload_video():
 
 
 @app.route('/preprocess')
-def upload_to_bucket():
+def preprocess():
     global train_post
     #Took videos all videos uploaded
     videos = os.listdir('tmp/train/videos')
     for vid in videos:
         # Split to frames
+        print(vid)
         vid_path = os.path.join('tmp/train/videos', vid)
+        print(vid_path)
+        print(train_post) 
         name = get_from_dict(vid,'file', train_post)["name"]
         rotate = get_from_dict(vid,'file', train_post)["rotate"]
         video2frame(vid_path,name, output_file='tmp/train/frames', rotate=rotate)
+        print(f'{vid} finished. Moving to next video')
+        time.sleep(1)
         # Crop the faces from the frames
+    
     frames = os.listdir('tmp/train/frames')
     for frame in frames:
         cropFace(os.path.join('tmp/train/frames', frame),
@@ -215,6 +231,7 @@ def get_from_dict(value, parameter, list_dict):
     Search in a list of dictionaries.
     Finds the dictionary which parameter match a value. 
     :Arguments:
+        value
         parameter (string) : The key that I want to use to retrieve.
         list_dict (list(dict)): a list with the different parameters of the videos uploaded
     :return:
@@ -225,9 +242,14 @@ def get_from_dict(value, parameter, list_dict):
         if sub[parameter] == value: 
             res = sub 
             return res
-        assert False, 'No dictionary matches the value entered. Please check for errors or None types'
-
 ##############################################################################################################################
+# Deploy 2 It's only a test
+
+@app.route('/deploy2')
+def deploy_testing():
+    return render_template('deploy.html')
+
+
 # About
 
 
