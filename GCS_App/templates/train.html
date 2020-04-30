@@ -6,14 +6,22 @@
 
 {% block content %} 
 <center>
+   <p>
+    Upload videos. Assign a role.
+    If android counter clock.
+    After uploading click train.
+   </p>
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
-            <p>
-                <input style="text-align: center;  type="file" name="file";  required value = "Name" >
-                <input style="text-align: center; type="file" name="file";  required value = "Role">
+            <p> 
+                <label for="fname">Who appears in this video?:</label><br>
+                <input type="text" id="fname" name="fname"><br>
+                <label for="frole">Assign a role:</label><br>
+                <input type="text" id="frole" name="frole"><br>
+                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_COUNTERCLOCKWISE">
+                <label for="frotate">Rotate image counter clockwise</label><br>
                 <input type="file" name="file" autocomplete="off" required>
-                <input type="submit" value="Upload">
-
+                <input type="submit" value="Upload"> <input type="reset">
             </p>
         </dl>
         <p>
@@ -27,6 +35,13 @@
             {% endif %}
             {% endwith %}
         </p>   
+        {% if posts[0] %}
+            {% for i in posts %}
+            <p> {{i}} </p>
+            {% endfor %}
+        {% else %}
+        <p>Please upload one file<p/>
+        {% endif %}
         <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
         <br>
     </form>
