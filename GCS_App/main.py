@@ -126,9 +126,9 @@ def embedding():
     return render_template('embedding.html')
 
 
-@app.route('/loading')
-def loading_SG(): 
-    return render_template('loading.html')
+@app.route('/deploy')
+def deploy(): 
+    return render_template('deploy.html')
 
 ################################################################################################################################
 # Test page
@@ -185,10 +185,10 @@ def output():
         outputs_post['name'] = post_response['prediction']
         outputs_post['accuracy'] = post_response['proba']
         outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
-        return render_template('/output.html', posts=outputs_post)
+        return render_template('output.html', posts=outputs_post)
     except: 
         outputs_post["name"] = 'ERROR'
-        return render_template('/output.html', posts=outputs_post)
+        return render_template('output.html', posts=outputs_post)
 
 def get_role(name, train_post):
     '''
@@ -221,6 +221,12 @@ def get_from_dict(value, parameter, list_dict):
         assert False, 'No dictionary matches the value entered. Please check for errors or None types'
 
 ##############################################################################################################################
+# About
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 # Useful also to visualize locally
