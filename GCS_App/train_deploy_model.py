@@ -44,14 +44,20 @@ def train_deploy_model(keys,
   
   #sagemaker_session = sagemaker.local.LocalSession(boto_session = session)
   sagemaker_session = sagemaker.Session(boto_session = session)
-
-  sklearn = SKLearn(
-      entry_point = model_path,
-      train_instance_type= instance,
-      role = keys["ROLE"],
-      sagemaker_session=sagemaker_session,
-      hyperparameters= hyperparms
-  )
+  if not hyperparms:
+    sklearn = SKLearn(
+       entry_point = model_path,
+       train_instance_type= instance,
+       role = keys["ROLE"],
+       sagemaker_session=sagemaker_session)
+  else: 
+    sklearn = SKLearn(
+       entry_point = model_path,
+       train_instance_type= instance,
+       role = keys["ROLE"],
+       sagemaker_session=sagemaker_session,
+       hyperparameters= hyperparms)
+    
   ## Data for training 
   inputs = sagemaker_session.upload_data(path='tmp/data', key_prefix=key_bucket, bucket=keys["BUCKET_NAME"])
   ## Training the model
