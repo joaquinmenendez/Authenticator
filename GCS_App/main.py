@@ -96,8 +96,11 @@ def upload_video():
 ###############################################################################################################################*
 # Uploading files
 
-
 @app.route('/preprocess')
+def preprocessed():
+    return render_template('/preprocess.html')
+
+@app.route('/preprocess/', methods=['POST'])
 def preprocess():
     global train_post
     #Took videos all videos uploaded
@@ -110,9 +113,8 @@ def preprocess():
         print(train_post) 
         name = get_from_dict(vid,'file', train_post)["name"]
         rotate = get_from_dict(vid,'file', train_post)["rotate"]
-        video2frame(vid_path,name, output_file='tmp/train/frames', rotate=rotate)
+        video2frame(vid_path,name, output_file='tmp/train/frames', rotate=rotate, mod_num=10)
         print(f'{vid} finished. Moving to next video')
-        time.sleep(1)
         # Crop the faces from the frames
     
     frames = os.listdir('tmp/train/frames')
@@ -121,7 +123,7 @@ def preprocess():
                  os.path.join('tmp/train/faces', frame))
     # Zip all faces to allow user to download them                 
     shutil.make_archive('tmp/zip_files/faces', 'zip', 'tmp/train/faces')
-    return render_template('preprocess.html')
+    return render_template('/train.html' , finish_preprocess=True , posts=train_post)
 
 
 @app.route('/embedding')
@@ -138,7 +140,7 @@ def embedding():
     # Save this dictionary as a binary object
     with open('tmp/train/embeddings/data.pickle', 'wb') as handle:
         pickle.dump(label_embedding, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    return render_template('embedding.html')
+    return render_template('/embedding.html')
 
 
 @app.route('/deploy')
