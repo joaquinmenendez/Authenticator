@@ -1,5 +1,5 @@
 __pycache__
 .myenv
-tmp/*
+tmp/keys
 *keys.json
 
