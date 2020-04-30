@@ -179,16 +179,20 @@ def output():
     outputs_post["file"] = test_posts['file'] # set the file
     outputs_post["path"] = test_posts['path'] # set the file
     try:
-        # embedding = preProcessPhoto(f'tmp/{outputs_post["file"]}',MODEL)
         key_sage = os.path.join('tmp/keys/sagemaker', os.listdir('tmp/keys/sagemaker')[0])
         post_response = testPhoto(outputs_post["path"], keys=key_sage, model=MODEL)
-        outputs_post['name'] = post_response['prediction']
-        outputs_post['accuracy'] = post_response['proba']
-        outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
-        return render_template('output.html', posts=outputs_post)
     except: 
         outputs_post["name"] = 'ERROR'
+        assert False, 'errrrrrror'
         return render_template('output.html', posts=outputs_post)
+
+    post_response = json.loads(post_response)  # Convert the string dictionary into a real dictionary
+    print(post_response['prediction'][0])
+    outputs_post['name'] = post_response['prediction'][0]
+    outputs_post['accuracy'] = post_response['proba'][0]
+    outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
+    return render_template('output.html', posts=outputs_post)
+
 
 def get_role(name, train_post):
     '''
