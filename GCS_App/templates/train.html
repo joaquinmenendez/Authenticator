@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
 {% block title %} 
-<h2 style="text-align: center; color: #16167f; font-size:35px "><strong>Upload the videos</a></strong></h2> 
+<h2 style="text-align: center; color: #16167f; font-size:35px "><strong>Upload your videos</a></strong></h2> 
  {% endblock title %}
 
 {% block content %} 
 <center>
    <p>
-    Upload videos. Assign a role.
-    If android counter clock.
-    After uploading click train.
+    For every video you shoul assign a name and a role. <br>
+    If the video was filmed on an Android device check the 'Rotate image counter clockwise' checkbox.
+    After uploading all your video click on 'Preprocess data'.
    </p>
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
@@ -35,15 +35,29 @@
             {% endif %}
             {% endwith %}
         </p>   
-        {% if posts[0] %}
-            {% for i in posts %}
-            <p> {{i}} </p>
-            {% endfor %}
-        {% else %}
-        <p>Please upload one file<p/>
-        {% endif %}
-        <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
         <br>
+        {% if posts[0] %}
+            <table>
+                    <tr>
+                        {% for key in posts[0].keys()%}
+                        <th> {{ key}} </th>
+                        {% endfor %}
+                    </tr>
+                    {% for dictionary in posts %}
+                    <tr>
+                            {% for keys, value in dictionary.items() %}
+                            <td> {{ value }} </td>
+                            {% endfor %} 
+                    </tr>
+                     {% endfor %}    
+            </table>
+        {% else %}
+            <p>Please upload one file<p/>
+        {% endif %}
+        <!-- 
+            <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
+         -->
+        
     </form>
     <br>
     <form style="text-align: center">
