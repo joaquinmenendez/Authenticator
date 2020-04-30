@@ -7,6 +7,7 @@ tmp/train/frames/*
 tmp/train/videos/*
 tmp/zip_files/*
 tmp/test/*
+tmp/videos/*
 
 *keys.json
 

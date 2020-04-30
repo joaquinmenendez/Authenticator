@@ -253,6 +253,8 @@ def reset():
     global train_post
     global test_posts
     global outputs_post
+    global COUNTER
+    COUNTER = 0
     train_post = []
     test_posts = {}
     outputs_post = {}
