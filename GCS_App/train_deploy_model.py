@@ -6,11 +6,11 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser() # Parser for command-line options
-parser.add_argument("keys", help = "Name of the bucket to download from", type = str)
-parser.add_argument("--instance", help = "Name of the video inside the bucket", default='ml.m4.xlarge',type = str)
+parser.add_argument("keys", help = "Keys for SageMaker", type = str)
+parser.add_argument("--instance", help = "Type of instance", default='ml.m4.xlarge',type = str)
 parser.add_argument("--instance_count", help = "Directory to store the video", default=1, type = int)
 parser.add_argument("--update", help = "Update should be true if there is the endpoint is already open", default=False, type = bool) 
-parser.add_argument("--model_path", help = "File with access keys", default='tmp/model/model.py', type = str) 
+parser.add_argument("--model_path", help = "Path to the model used", default='tmp/model/model.py', type = str) 
 parser.add_argument("--hyperparms", help = "Hyperparameters for SVM", type = str) # Default is None
 parser.add_argument("--key_bucket", help = "Key of the pickle data with the data", default='tmp/train/embeddings',type = str) 
 
