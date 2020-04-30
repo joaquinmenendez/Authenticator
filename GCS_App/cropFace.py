@@ -46,6 +46,8 @@ def cropFace(input_img, output_img=None, color=None):
         return crop(input_img, color)
     else:
         img_cropped = crop(input_img, color)
+        if img_cropped is None:
+            return
         cv2.imwrite(output_img, img_cropped)
         print(f'Image saved in: {output_img}')
 
