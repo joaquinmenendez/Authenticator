@@ -53,9 +53,9 @@ train_post = []
 train_dict = {
                 "file": None,
                 "path": None,
-                "name": "Joaquin",
-                "role": "Accesso",
-                "rotate": "ROTATE_90_COUNTERCLOCKWISE"
+                "name": None,
+                "role": None,
+                "rotate": None
             }
 
 
@@ -122,7 +122,7 @@ def preprocess():
         cropFace(os.path.join('tmp/train/frames', frame),
                  os.path.join('tmp/train/faces', frame))
     # Zip all faces to allow user to download them                 
-    shutil.make_archive('tmp/zip_files/faces', 'zip', 'tmp/train/faces')
+    shutil.make_archive('tmp/zip_files/faces', 'zip', './tmp/train/faces')
     return render_template('/train.html' , finish_preprocess=True , posts=train_post)
 
 
@@ -147,7 +147,7 @@ def embedding():
 def deploy():
     key = os.listdir('tmp/keys/sagemaker')[0]
     train_deploy_model(keys= os.path.join('tmp/keys/sagemaker',key))
-    return render_template('deploy.html')
+    return render_template('/test.html')
 
 ################################################################################################################################
 # Test page
@@ -175,7 +175,7 @@ def upload_file():
             test_posts['file'] = secure_filename(file.filename) 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file']))
             flash(f'{ test_posts["file"]} successfully uploaded')
-            test_posts["path"] = os.path.join(app.config['UPLOAD_FOLDER'], test_posts['file'])  # Plot the file uploaded
+            test_posts["path"] = os.path.join('tmp/test', test_posts['file'])  # Plot the file uploaded
             return redirect(request.url)
         else:
             flash(f'Cannot upload {file.filename} \n Allowed file types are: jpg')
@@ -245,6 +245,32 @@ def get_from_dict(value, parameter, list_dict):
             res = sub 
             return res
 ##############################################################################################################################
+# Reset 
+
+
+@app.route('/reset')
+def reset():
+    global train_post
+    global test_posts
+    global outputs_post
+    train_post = []
+    test_posts = {}
+    outputs_post = {}
+    for file in os.listdir('tmp/train/faces'):
+        os.remove('tmp/train/faces/' + file)
+    for file in os.listdir('tmp/train/frames'):
+        os.remove( 'tmp/train/frames/' + file)
+    for file in os.listdir('tmp/train/videos'):
+        os.remove('tmp/train/videos/' + file)
+    for file in os.listdir('tmp/train/embeddings'):
+        os.remove('tmp/train/embeddings/' + file)
+    for file in os.listdir('tmp/test'):
+        os.remove('tmp/test/' + file)
+    for file in os.listdir('tmp/zip_files'):
+        os.remove('tmp/zip_files/' + file)
+    return render_template('/home.html')
+
+
 # Deploy 2 It's only a test
 
 @app.route('/deploy2')
