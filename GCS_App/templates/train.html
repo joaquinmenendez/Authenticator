@@ -8,39 +8,52 @@
 <center>
    <p>
     For every video you should assign a name and a role. <br>
-    If the video was filmed on an Android device check the 'Rotate image counter clockwise' checkbox.<br>
+    <br>
     After uploading all your video click on 'Preprocess data'.
    </p>
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
-            <p> 
-                <label for="fname">Who appears in this video?:</label><br>
-                <input type="text" id="fname" name="fname"><br>
-                <label for="frole">Assign a role:</label><br>
-                <input type="text" id="frole" name="frole"><br>
-                <input type="checkbox" id="frotate" name="frotate" value="None">
-                <label for="frotate">Not rotate</label><br>
-                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_CLOCKWISE">
-                <label for="frotate">Rotate image 90° clockwise</label><br>
-                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_COUNTERCLOCKWISE">
-                <label for="frotate">Rotate image 90° counter clockwise</label><br>
-                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_180">
-                <label for="frotate">Rotate image 180°</label><br>
                 <input type="file" name="file" autocomplete="off" required>
-                <input type="submit" value="Upload"> <input type="reset">
-            </p>
-        </dl>
+                <input type="submit" value="Upload"> <input type="reset"> <br>
         <p>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-            {% endwith %}
-        </p>   
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        </p>  
+        <dl>
+ 
+</center>
+        <div class="container">      
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <center>
+                    <label for="fname">Who appears in this video?</label><br>
+                    <input type="text" id="fname" name="fname"><br>
+                    <label for="frole">Assign a role</label><br>
+                    <input type="text" id="frole" name="frole"><br>
+                    </center>
+                </div>
+                <div class="col-4">
+                    <input type="checkbox" id="frotate" name="frotate" value="None" checked>
+                    <label for="frotate">Not rotate</label><br>
+                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_CLOCKWISE">
+                    <label for="frotate">Rotate image 90° clockwise</label><br>
+                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_COUNTERCLOCKWISE">
+                    <label for="frotate">Rotate image 90° counter clockwise</label><br>
+                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_180">
+                    <label for="frotate">Rotate image 180°</label><br>
+                </div>
+            </div>
+        </div>
+
+<center>
+
         <br>
         {% if posts[0] %}
             <table>
@@ -60,9 +73,7 @@
         {% else %}
             <p>Please upload one file<p/>
         {% endif %}
-        <!-- 
-            <img src="https://sites.duke.edu/wids/files/2020/04/mids-photo.png" text-align: center; width="740" height="510"/>
-         -->
+ 
     </form>
     
     <br>
