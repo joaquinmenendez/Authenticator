@@ -202,7 +202,8 @@ outputs_post = {
                 "path": None,
                 "name": None,
                 "accuracy": None,
-                "role": None
+                "role": None,
+                "cropface": None
                 }
 
 
@@ -213,6 +214,7 @@ def output():
     global train_post
     outputs_post["file"] = copy.deepcopy(test_posts['file']) # set the file
     outputs_post["path"] = copy.deepcopy(test_posts['path']) # set the file
+    outputs_post["cropface"] = 'tmp/test/Cropped_' + outputs_post["file"]  # set the file
     try:
         key_sage = os.path.join('tmp/keys/sagemaker', os.listdir('tmp/keys/sagemaker')[0])
         post_response = testPhoto(outputs_post["path"], keys=key_sage, model=MODEL)
