@@ -92,7 +92,7 @@ def upload_video():
             train_post[COUNTER]["role"] = request.form['frole'] 
             # check for rotation
             if request.form.get('frotate') is None: 
-                train_post[COUNTER]["rotate"] = 'ROTATE_90_CLOCKWISE'
+                train_post[COUNTER]["rotate"] = None
             else:
                 train_post[COUNTER]["rotate"] = request.form.get('frotate')
             COUNTER += 1
@@ -141,7 +141,7 @@ def preprocess():
 @app.route('/embedding')
 def embedding():
     global DEPLOY
-    if (DEPLOY == 0) or (DEPLOY == 2):
+    if DEPLOY == 0:
         label_embedding = {'data':[], 'label':[]}
         path = 'tmp/train/faces'
         faces = os.listdir('tmp/train/faces')
@@ -162,12 +162,14 @@ def embedding():
 @app.route('/embedding/' , methods = ["POST"])
 def deploy():
     global DEPLOY
-    DEPLOY = 1
-    print('Training and deploying model')
-    key = os.listdir('tmp/keys/sagemaker')[0]
-    train_deploy_model(keys= os.path.join('tmp/keys/sagemaker',key))
-    DEPLOY = 2
-    return render_template('/deploy.html')
+    if DEPLOY == 0:
+        print('Training and deploying model')
+        key = os.listdir('tmp/keys/sagemaker')[0]
+        train_deploy_model(keys= os.path.join('tmp/keys/sagemaker',key))
+        DEPLOY = 0
+        return render_template('/deploy.html')
+    else:
+        return render_template('/model_is_deploying.html')
 
 
 ################################################################################################################################
