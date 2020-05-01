@@ -208,35 +208,26 @@ outputs_post = {
 
 @app.route('/output')
 def output():
+    global test_posts
     global outputs_post
-    outputs_post["file"] = test_posts['file'] # set the file
-    outputs_post["path"] = test_posts['path'] # set the file
+    global train_post
+    outputs_post["file"] = copy.deepcopy(test_posts['file']) # set the file
+    outputs_post["path"] = copy.deepcopy(test_posts['path']) # set the file
     try:
         key_sage = os.path.join('tmp/keys/sagemaker', os.listdir('tmp/keys/sagemaker')[0])
         post_response = testPhoto(outputs_post["path"], keys=key_sage, model=MODEL)
     except: 
         outputs_post["name"] = 'ERROR'
-        return render_template('output.html', posts=outputs_post)
+        return render_template('output_error.html', posts=outputs_post)
 
     post_response = json.loads(post_response)  # Convert the string dictionary into a real dictionary
     print(post_response['prediction'][0])
+    print('Train post: {}'.format(train_post))
     outputs_post['name'] = post_response['prediction'][0]
-    outputs_post['proba'] = str(max(post_response['proba'][0])*100).format("{}%")
-    outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
+    outputs_post['accuracy'] = str(max(post_response['proba'][0])*100).format("{}%")
+    # name = get_from_dict(vid,'file', train_post)["name"]
+    outputs_post['role'] = get_from_dict(outputs_post['name'],'name', train_post)["role"]
     return render_template('output.html', posts=outputs_post)
-
-
-def get_role(name, train_post):
-    '''
-    Search for a name in a list of dictionaries
-    :return:
-    res (dict): Dictionary that matches the name
-    '''
-    res = None
-    for sub in train_post: 
-        if sub['name'] == name: 
-            res = sub 
-            return res
 
 
 def get_from_dict(value, parameter, list_dict):
