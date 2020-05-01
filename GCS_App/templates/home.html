@@ -1,18 +1,21 @@
 {% extends "layout.html" %}
 
 {% block title %} 
-<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+<h2>
     <strong>Welcome to Authentificator!</a></strong>
 </h2>
 {% endblock title %}
 
 {% block content %} 
-    <p style="text-align: center; font-size:25px "> Authentificator is a framework to train and deploy customized face recognition algorithms in an easy and fast way.</p>
-    <p style="text-align: center; font-size:25px "> You can use Authentificator to identify your team members and share the appropriate access rights to keep your business safe.</p>
-	<p style="text-align: center; font-size:25px "> 
+<br>
+    <p> Authentificator is a framework to train and deploy face recognition algorithms in an easy and fast way.</p>
+    <p> You can use Authentificator to identify your team members and share the appropriate access rights to keep your business safe.</p>
+	<div id="vid-container" style="padding-bottom:56.25%; position:relative; display:block; width: 100%"> 
         <a target="_top"> 
-        <iframe src="https://www.youtube.com/embed/r5x1te9vxK4" text-align: center; width="853" height="480" frameborder="0" allowfullscreen></iframe>
-        <p style="text-align: center; font-size:25px ;color: #16167f;"><strong> Teach the algortihm to recognize your team!</strong></p>
+        <iframe name="frame-video-proj" id="frame-video-proj" width="100%" height="100%"
+        src="https://www.youtube.com/embed/r5x1te9vxK4" text-align: center; frameborder="0"; allowfullscreen style="position:absolute; top:0; left: 0"></iframe>
+    </div>
+        <p style="text-align: center;"><strong> Teach the algortihm to recognize your team!</strong></p>
         </a>
 
     <form style="text-align: center">
