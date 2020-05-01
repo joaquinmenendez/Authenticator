@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
-{% block title %} <h1> Output </h1> {% endblock title %}
+{% block title %} <h1> Image detection </h1> {% endblock title %}
 
 {% block content %} 
-The embedding of {{posts['name']}} is: {{posts}}
+<center>
+<p>The person in the image is {{posts['name']}} with probability {{posts['proba']}}. <br>
+The role assigned to {{posts['name']}} is {{posts['role']}}</p>
+<img src="{{posts["path"]}}" alt="Image uploaded" ; width="400"/>	
+</center>
 {% endblock content %}

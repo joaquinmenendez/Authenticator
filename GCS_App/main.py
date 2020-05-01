@@ -214,7 +214,7 @@ def output():
     post_response = json.loads(post_response)  # Convert the string dictionary into a real dictionary
     print(post_response['prediction'][0])
     outputs_post['name'] = post_response['prediction'][0]
-    outputs_post['accuracy'] = post_response['proba'][0]
+    outputs_post['proba'] = str(max(post_response['proba'][0])*100).format("{}%")
     outputs_post['role'] = get_role(outputs_post['name'], train_post)["role"]
     return render_template('output.html', posts=outputs_post)
 
