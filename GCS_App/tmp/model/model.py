@@ -55,3 +55,10 @@ def model_fn(model_dir):
     """
     model = joblib.load(os.path.join(model_dir, "model.joblib"))
     return model
+
+def predict_fn(input_data, model):
+    """ Returns a dictionary with the probabilities and the prediction """
+    pred = model.predict(input_data)
+    prob = model.predict_proba(input_data)
+    prediction = {"prediction":pred,"proba":prob}
+    return prediction

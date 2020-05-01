@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
 {% block title %} 
-<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+<h2>
     <strong>Test your model</a></strong>
 </h2>
 {% endblock title %}
 
 {% block content %} 
-    <center>
+<div id = "test-content">
     <p>Upload a picture that you want to test</p>
-
+    <center>
     <form method="post" action="/test" enctype="multipart/form-data">
         <dl>
             <p>
@@ -30,13 +30,13 @@
         </dl>
 
     </form>
-
         {% if posts["file"] %}
+        <br>
+        <img src="{{posts["path"]}}" alt="Image selected" ; width="400"; style="margin-bottom: 2em"/>
         <form>
         <button formaction="/output">Test this photo!</button>
         </form>
-        <br>
-        <img src="{{posts["path"]}}" alt="Image selected" ; width="400"/>
+        </center>
+</div>
         {% endif %}
-    </center>
 {% endblock content %}
