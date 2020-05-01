@@ -1,6 +1,7 @@
 __pycache__
 .myenv
-tmp/keys
+tmp/keys/sakemaker/*
+tmp/keys/s3/*
 tmp/train/embeddings/*
 tmp/train/faces/*
 tmp/train/frames/*
