@@ -98,7 +98,8 @@ def upload_video():
 
 @app.route('/preprocess')
 def preprocessed():
-    return render_template('/preprocess.html')
+    image = os.listdir('tmp/train/faces')[0]
+    return render_template('/preprocess.html', image = image)
 
 @app.route('/preprocess/', methods=['POST'])
 def preprocess():
