@@ -16,9 +16,16 @@ import shutil
 import copy
 import time
 
+# Initialize directories
+directories = ['keys','keys/s3', 'keys/sagemaker', 'test', 'train', 'train/faces',
+               'train/frames', 'train/embeddings', 'train/videos', 'zip_files']
+for d in directories:
+    try:
+        os.mkdir('tmp/' + d)
+    except OSError as e:
+        print('{} already exists'.format('tmp/' + d))
 
-
-# Initialize variables.
+# Initialize variables
 # I did this already on `app.py` but just in case
 app = Flask(__name__, static_url_path="/tmp", static_folder="tmp")
 app.secret_key = "secret key"  # Flask ask me for a key.
