@@ -17,6 +17,30 @@
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
             <input type="file" name="file" autocomplete="off" required>
+            </center>
+                    <div class="container">      
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <center>
+                                <label for="fname">Who appears in this video?</label><br>
+                                <input type="text" id="fname" name="fname"><br>
+                                <label for="frole">Assign a role</label><br>
+                                <input type="text" id="frole" name="frole"><br>
+                                </center>
+                            </div>
+                            <div class="col-4">
+                                <p> Rotation options </p>
+                                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_CLOCKWISE">
+                                <label for="frotate">Rotate image 90° clockwise</label><br>
+                                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_COUNTERCLOCKWISE">
+                                <label for="frotate">Rotate image 90° counter clockwise</label><br>
+                                <input type="checkbox" id="frotate" name="frotate" value="ROTATE_180">
+                                <label for="frotate">Rotate image 180°</label><br>
+                            </div>
+                        </div>
+                    </div>
+            <center>
+                <br>
             <input type="submit" value="Upload"> <input type="reset"  value="Clean fields"> <br>
         <p>
             {% with messages = get_flashed_messages() %}
@@ -31,33 +55,6 @@
             <br>
         </p>  
         <dl>
- 
-</center>
-        <div class="container">      
-            <div class="row justify-content-center">
-                <div class="col-4">
-                    <center>
-                    <label for="fname">Who appears in this video?</label><br>
-                    <input type="text" id="fname" name="fname"><br>
-                    <label for="frole">Assign a role</label><br>
-                    <input type="text" id="frole" name="frole"><br>
-                    </center>
-                </div>
-                <div class="col-4">
-                    <input type="checkbox" id="frotate" name="frotate" value="None" checked>
-                    <label for="frotate">Not rotate</label><br>
-                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_CLOCKWISE">
-                    <label for="frotate">Rotate image 90° clockwise</label><br>
-                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_90_COUNTERCLOCKWISE">
-                    <label for="frotate">Rotate image 90° counter clockwise</label><br>
-                    <input type="checkbox" id="frotate" name="frotate" value="ROTATE_180">
-                    <label for="frotate">Rotate image 180°</label><br>
-                </div>
-            </div>
-        </div>
-
-<center>
-
         <br>
         {% if posts[0] %}
             <table>
@@ -80,12 +77,13 @@
         {% endif %}
  
     </form>
-    
+    {% if posts%}
     <br>
         <form method="post" action="/preprocess/">
             <button name="preprocess_button" type="submit">Preprocess data </button>
         </form>
     <br>
+    {% endif %}
         {% if finish_preprocess == True %}
         <form style="text-align: center">
             <button formaction="/preprocess">
