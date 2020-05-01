@@ -1,15 +1,21 @@
 body {
   background: #ffffff;
-  color: #16167f;
+  color: #012169;
   margin-top: 5rem;
+  position: relative;
+  width: 80%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-right: auto;
+  margin-left: auto;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
-  color: #16167f;
+  color: #012169;
 }
 
 .bg-steel {
-  background-color: #16167f;
+  background-color: #012169;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -22,6 +28,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .site-header .navbar-nav .nav-link.active {
   font-weight: 800;
+}
+
+.nav-item.nav-link:hover {
+        background-color: #01123b;
+        color: white;
+        border-radius: 10px;
 }
 
 .content-section {
