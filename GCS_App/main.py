@@ -37,6 +37,7 @@ ALLOWED_VIDEOS = set(['mp4', 'mov'])
 #GLOBAL VARIABLES
 MODEL = InceptionResnetV1(pretrained='vggface2').eval()  # Preload the resnet
 COUNTER = 0
+DEPLOY = 0
 
 # Handy functions
 def allowed_file(filename, allowed):
@@ -139,26 +140,35 @@ def preprocess():
 
 @app.route('/embedding')
 def embedding():
-    label_embedding = {'data':[], 'label':[]}
-    path = 'tmp/train/faces'
-    faces = os.listdir('tmp/train/faces')
-    for face in faces:
-        name = face.split('_')[0]
-        #Embeed the faces. Returns a dictionary
-        emb_dic = embeddings(os.path.join(path, face), MODEL)
-        label_embedding['data'].append(emb_dic['data'])
-        label_embedding['label'].append(name)
-    # Save this dictionary as a binary object
-    with open('tmp/train/embeddings/data.pickle', 'wb') as handle:
-        pickle.dump(label_embedding, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    return render_template('/embedding.html')
+    global DEPLOY
+    if (DEPLOY == 0) or (DEPLOY == 2):
+        label_embedding = {'data':[], 'label':[]}
+        path = 'tmp/train/faces'
+        faces = os.listdir('tmp/train/faces')
+        for face in faces:
+            name = face.split('_')[0]
+            #Embeed the faces. Returns a dictionary
+            emb_dic = embeddings(os.path.join(path, face), MODEL)
+            label_embedding['data'].append(emb_dic['data'])
+            label_embedding['label'].append(name)
+        # Save this dictionary as a binary object
+        with open('tmp/train/embeddings/data.pickle', 'wb') as handle:
+            pickle.dump(label_embedding, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        return render_template('/embedding.html')
+    if DEPLOY == 1:
+        return render_template('/model_is_deploying.html')
 
 
-@app.route('/deploy')
+@app.route('/embedding/' , methods = ["POST"])
 def deploy():
+    global DEPLOY
+    DEPLOY = 1
+    print('Training and deploying model')
     key = os.listdir('tmp/keys/sagemaker')[0]
     train_deploy_model(keys= os.path.join('tmp/keys/sagemaker',key))
-    return render_template('/test.html')
+    DEPLOY = 2
+    return render_template('/deploy.html')
+
 
 ################################################################################################################################
 # Test page
@@ -258,14 +268,26 @@ def reset():
     global test_posts
     global outputs_post
     global COUNTER
+    global DEPLOY
+    DEPLOY = 0
     COUNTER = 0
     train_post = []
-    test_posts = {}
-    outputs_post = {}
+    test_posts =  {
+                    "file": None,
+                    "path": None
+                  }
+    outputs_post = {
+                    "file": None,
+                    "path": None,
+                    "name": None,
+                    "accuracy": None,
+                    "role": None,
+                    "cropface": None
+                    }
     for file in os.listdir('tmp/train/faces'):
         os.remove('tmp/train/faces/' + file)
     for file in os.listdir('tmp/train/frames'):
-        os.remove( 'tmp/train/frames/' + file)
+        os.remove('tmp/train/frames/' + file)
     for file in os.listdir('tmp/train/videos'):
         os.remove('tmp/train/videos/' + file)
     for file in os.listdir('tmp/train/embeddings'):
@@ -275,14 +297,6 @@ def reset():
     for file in os.listdir('tmp/zip_files'):
         os.remove('tmp/zip_files/' + file)
     return render_template('/home.html')
-
-
-# Deploy 2 It's only a test
-
-@app.route('/deploy2')
-def deploy_testing():
-    return render_template('deploy.html')
-
 
 # About
 
