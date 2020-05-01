@@ -2,21 +2,34 @@
 
 {% block title %} 
 <h2 style="text-align: center; font-size:35px ; color: #16167f;">
-    <strong> Embeddings created!</strong>
+    <strong>Step 2/3 completed</strong>
+
 </h2>
+
+<center>
+ <p style="text-align: center; font-size:20px "> You have a choice to download image embeddings or proceed to the next step</p>
+ </center>
+
 {% endblock title %}
-
+<br>
+</br>
 {% block content %} 
- <p style="text-align: center; font-size:25px "> Embeddings on the bucket </p>
-
-<form style="text-align: center" method="get" action="tmp/train/embeddings/data.pickle">
-   <button type="submit">Download the embeddings!</button>
-</form>
-
+    <form style="text-align: center; font-size:20px;" method="get" action="tmp/train/embeddings/data.pickle">
+        <button type="submit">Download image embeddings</button>
+    </form>
+<br>
+</br>
+<center>
+<img src="https://sites.duke.edu/wids/files/2020/05/embeddings.png" text-align: center; width="800" height="250"/>
+</center>
+<br>
+</br>
+<br>
+</br>
 <form style="text-align: center">
     <button formaction="/deploy">
-        <p style="text-align: center; vertical-align: middle; margin: auto;; font-size:20px ">
-            <strong>Train and deploy the model</strong>
+        <p style="text-align: center; vertical-align: middle; margin: auto;font-size:20px ">
+            <strong>Proceed</strong>
         </p>
     </button>
 </form>

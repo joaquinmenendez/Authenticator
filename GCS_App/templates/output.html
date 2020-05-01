@@ -3,8 +3,8 @@
 
 {% block content %} 
 <center>
-<p>The person in the image is {{posts['name']}} with probability {{posts['proba']}}. <br>
+<p>The person in the image is {{posts['name']}} with probability {{posts['accuracy'][:5] + '%'}}. <br>
 The role assigned to {{posts['name']}} is {{posts['role']}}</p>
-<img src="{{posts["path"]}}" alt="Image uploaded" ; width="400"/>	
+<img src="{{posts["cropface"]}}" alt="Image uploaded" ; width="300"/>	
 </center>
 {% endblock content %}

@@ -1,7 +1,7 @@
 __pycache__
 .myenv
-tmp/keys/sakemaker/*
-tmp/keys/s3/*
+tmp/keys/sakemaker/a_sage_keys.json
+tmp/keys/s3/A_keys.json
 
 *keys.json
 
