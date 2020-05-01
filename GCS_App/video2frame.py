@@ -31,7 +31,7 @@ def video2frame(video_file, person_name, mod_num=5, output_file=None, rotate='RO
         # Saving images in output_file dir.
         # CV2 does not identify if the camera used was frontal or backward.
         # We are using only frontal camera so we are rotating the frames
-        if rotate == 'None':
+        if rotate == None:
             [cv2.imwrite(os.path.join(output_file, '{name}_{num}.jpg'.format(name=person_name, num=str(i))),
          frame) for i, frame in enumerate(frames, 1)]
         else:
