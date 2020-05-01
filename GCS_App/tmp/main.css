@@ -3,7 +3,17 @@ body {
   color: #012169;
   margin-top: 5rem;
   position: relative;
-  width: 80%;
+  width: 75%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+header {
+  background: #ffffff;
+  color: #012169;
+  position: relative;
+  width: 75%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-right: auto;
   margin-left: auto;
@@ -13,6 +23,12 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: #012169;
 }
+
+.p {
+    font-size:25px;
+    color: #16167f
+}
+
 
 .bg-steel {
   background-color: #012169;
