@@ -63,7 +63,8 @@ train_dict = {
                 "path": None,
                 "name": None,
                 "role": None,
-                "rotate": None
+                "rotate": None,
+                "frames": None,
             }
 
 
@@ -90,6 +91,7 @@ def upload_video():
             train_post[COUNTER]["path"] = os.path.join(app.config['UPLOAD_FOLDER'], train_post[COUNTER]['file'])  # Store the path
             train_post[COUNTER]["name"] = request.form['fname']
             train_post[COUNTER]["role"] = request.form['frole'] 
+            train_post[COUNTER]["frames"] = int(request.form['fframes'] )
             # check for rotation
             if request.form.get('frotate') is None: 
                 train_post[COUNTER]["rotate"] = None
@@ -125,7 +127,8 @@ def preprocess():
         print(train_post) 
         name = get_from_dict(vid,'file', train_post)["name"]
         rotate = get_from_dict(vid,'file', train_post)["rotate"]
-        video2frame(vid_path,name, output_file='tmp/train/frames', rotate=rotate, mod_num=10)
+        frames = get_from_dict(vid,'file', train_post)["frames"]
+        video2frame(vid_path,name, output_file='tmp/train/frames', rotate=rotate, mod_num=frames)
         print(f'{vid} finished. Moving to next video')
         # Crop the faces from the frames
     
