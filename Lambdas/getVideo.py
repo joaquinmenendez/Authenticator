@@ -3,6 +3,11 @@
 ## Memory 320 MB
 ## Runtime 1 minute
 ## Layers: arn:aws:lambda:us-east-1:177627986553:layer:cv2-boto3:1
+
+#### Description
+# Author: Joaquin Menendez
+# This Lambda function takes a video from a bucket in AWS ,
+# extract N images per second from the video and upload it to a bucket that the user can select.
 import boto3
 import os
 import pickle
