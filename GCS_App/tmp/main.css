@@ -7,6 +7,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-right: auto;
   margin-left: auto;
+  font-size: 1.5em
 }
 
 header {
@@ -17,6 +18,7 @@ header {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-right: auto;
   margin-left: auto;
+  margin-bottom: 5em;
 }
 
 
@@ -29,6 +31,11 @@ h1, h2, h3, h4, h5, h6 {
     color: #16167f
 }
 
+#test-content {
+  width: 50%;
+  margin-left: auto ;
+  margin-right: auto ;
+}
 
 .bg-steel {
   background-color: #012169;
