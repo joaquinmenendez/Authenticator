@@ -311,6 +311,12 @@ def about():
     return render_template('about.html')
 
 
+# Loader.io
+
+@app.route('/loaderio-08edafe149fb3355c1d9948d4204dc92/')
+def loader():
+    return render_template('loaderio-08edafe149fb3355c1d9948d4204dc92.html')
+
 # Run main 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)
