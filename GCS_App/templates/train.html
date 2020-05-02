@@ -1,19 +1,20 @@
 {% extends "layout.html" %}
 
 {% block title %} 
-<h2 style="text-align: center; color: #16167f; font-size:35px "><strong>Upload your videos</a></strong></h2> 
+<h2><strong>Upload your videos</a></strong></h2> 
  {% endblock title %}
 
 {% block content %} 
-<center>
-   <p>
-    Upload a video for every person that you want to include in your model.
-    For every video you should assign a name and a role. <br>
+    <h5 style = "margin-bottom: 1em; margin-top: 1em"><strong>Instructions</strong></h5>
+    <p>
+    Upload a video (30 seconds long) for every person that you want to include in your model. <br>
+    For each video you should assign a name and a role. <br>
     Depending on how the video was filmed you may need to rotate it. <br>
-    If you uploaded a wrong video you could delete all clicking on the 'Reset' option in the navigation bar.<br>
     After uploading all your videos click on 'Preprocess data'. <br>
-    <br>
+    If you uploaded a wrong video you could delete all by clicking on the 'Reset' option in the navigation bar.<br>
    </p>
+   <br>
+   <center>
     <form method="post" action="/train" enctype="multipart/form-data">
         <dl>
             <input type="file" name="file" autocomplete="off" required>
