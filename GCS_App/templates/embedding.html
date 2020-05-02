@@ -1,33 +1,33 @@
 {% extends "layout.html" %}
 
 {% block title %} 
-<h2 style="text-align: center; font-size:35px ; color: #16167f;">
+<h2>
     <strong>Step 2/3 completed</strong>
 
 </h2>
 
 <center>
- <p style="text-align: center; font-size:20px "> You have a choice to download image embeddings or proceed to the next step</p>
+ <p style="text-align: center;"> You have a choice to download image embeddings or proceed to the next step</p>
  </center>
 
 {% endblock title %}
 <br>
 </br>
 {% block content %} 
-    <form style="text-align: center; font-size:20px;" method="get" action="tmp/train/embeddings/data.pickle">
+    <form style="text-align: center;" method="get" action="tmp/train/embeddings/data.pickle">
         <button type="submit">Download image embeddings</button>
     </form>
 <br>
 </br>
 <center>
-<img src="https://sites.duke.edu/wids/files/2020/05/embeddings.png" text-align: center; width="800" height="250"/>
+<img src="https://raw.githubusercontent.com/joaquinmenendez/Facial_Recognition_Pipeline/master/videos_photos/embeddings.png?token=AEN4ZVTQ5PWI6WPMDLDTXKS6W34JC" text-align: center; width="800" height="250"/>
 </center>
 <br>
 </br>
 <br>
 </br>
 <center>
-    <form method="post" action="/embedding/" style="text-align: center vertical-align: middle; margin: auto;font-size:20px">
+    <form method="post" action="/embedding/" style="text-align: center vertical-align: middle; margin: auto;">
         <button name="preprocess_button" type="submit">Train and deploy</button>
     </form>
 
