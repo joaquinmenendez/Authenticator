@@ -28,7 +28,7 @@ def embeddings(file, model, tensor=False):
         embedding = embedding.detach().numpy()
     dic = {}
     dic["data"] = embedding
-    print ('Embeddings calculated')
+    #print ('Embeddings calculated')
     return dic
 
 
