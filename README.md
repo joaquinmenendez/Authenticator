@@ -48,7 +48,7 @@ python3 main.py
 
 ### GCR
 
-## FSagemaker
+## Sagemaker
 
 We are using our own personal bucket (`video-facerecogproj`) for this project. 
 In case that you wanted to replicate this project create a new bucket and write the **access** and **secret** keys into a json file like this:
