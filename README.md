@@ -5,6 +5,7 @@
 - [Julia Oblasova](https://github.com/IuliiaO)
 
 A facial recognition pipeline that employs a Flask App running on Google Cloud Run to upload and preprocess videos of people faces. The processed data is uploaded to AWS Sagemaker where a SVM model is trained and deployed. The user could interact with this ML model using the Flask app or sending a POST request.<br>
+You can see a quick demostration [here.](https://youtu.be/0v3HIwOZ064)
 
 **Keywords**: *GCR, Flask, Container, SageMaker, Pytorch, Scikit-Learn*
 
