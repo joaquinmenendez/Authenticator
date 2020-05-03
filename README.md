@@ -102,3 +102,5 @@ In case that you wanted to replicate this project create a Sagemaker session and
 }
 ```
 The data should be stored in `tmp/keys/sagemaker`.
+The Flask app is calling the function `train_deploy_model.py ` which is going to send to sagemaker the model we want to train. In this case we train a SVM located in `tmp/model.py`. 
+
