@@ -80,7 +80,7 @@ gcloud builds submit --tag gcr.io/cropthisface/authentificator
 ```
 After the image is deployed we create a new service. <br>
 Select the container registry image
-![image1](https://user-images.githubusercontent.com/43391630/80851273-aed6a000-8bee-11ea-91e6-f77ccf8c4e0b.png) <br>
+![image1](https://user-images.githubusercontent.com/43391630/80896397-7781f500-8cbb-11ea-954a-c1eb47e961c4.png) <br>
 Set the following settings
 ![image2](https://user-images.githubusercontent.com/43391630/80851250-88b10000-8bee-11ea-9b1a-9506ec25add7.png)
 
