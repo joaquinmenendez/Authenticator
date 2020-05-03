@@ -36,11 +36,11 @@ if __name__ == '__main__':
     train_X = data['data']
 
     # Now use scikit-learn's NN to train the model.
-    model = model = SVC(C = args.C,
-                        kernel= args.kernel,
-                        gamma = args.gamma,
-                        probability= args.probability
-                       )
+    model = SVC(C = args.C,
+                    kernel= args.kernel,
+                    gamma = args.gamma,
+                    probability= args.probability
+                )
 
 
     
