@@ -47,7 +47,7 @@ python3 main.py
 ```
 
 
-## GCR
+## Flask App in Google Cloud Run
 
 We need to create an image for our container using our `Dockerfile`
 ```Dockerfile
