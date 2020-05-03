@@ -6,14 +6,20 @@ It seems that Amazon Cloud9 came with an **8GB** default size.
 In order to expand this you should run a small bash script (`resize.sh`).
 A more detailed description could be consulted on this [link](https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html).
 
-### Virtual environment
+```bash
+bash resize.sh
+```
+
+### Create the virtual environment
 ```bash
 virtualenv .myenv
 source .myenv/bin/activate
 make install
 ```
 
-We are using our own personal bucket (`video-facerecogproj`) for this project. 
+### Configuration
+
+We  used our own personal bucket (`video-facerecogproj`) for this project. 
 In case that you wanted to replicate this project create a new bucket and write the **access** and **secret** keys into a json file like this:
 ```json
 {"AWS_ACCESS_KEY_ID" : "---",
@@ -25,7 +31,7 @@ If you don't know how to obtain these credentials check this [tutorial](https://
 The policy we used is in [`configuration_s3.json`](https://raw.githubusercontent.com/joaquinmenendez/Facial_Recognition_Pipeline/master/multimedia/configuration_s3.json?token=AKLBVDXAUB7C5CAKASBDOEC6VD47Q)
 
 **Lambda**
-tHE Lambda function tooks a video in a bucket and generates images in a .jpg format in the same Bucket.
+This Lambda function tooks a video in a bucket and generates images in a .jpg format in the same Bucket.
 The lambda function can be called with a POST request.
 The folder `Lambdas` contains the `getVideo.py` script that goes inside the Lambda function,
 a bash script `call_getVideo.sh` to send the POST request and a JSON file with the fields you must complete to run the POST.
