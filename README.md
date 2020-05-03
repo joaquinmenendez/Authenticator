@@ -5,6 +5,7 @@
 - [Julia Oblasova](https://github.com/IuliiaO)
 
 A facial recognition pipeline that employs a Flask App running on Google Cloud Run to upload and preprocess videos of people faces. The processed data is uploaded to AWS Sagemaker where a SVM model is trained and deployed. The user could interact with this ML model using the Flask app or sending a POST request.<br>
+You can see a quick demostration [here.](https://youtu.be/1SOxggxeDqo)
 
 **Keywords**: *GCR, Flask, Container, SageMaker, Pytorch, Scikit-Learn*
 
@@ -80,7 +81,7 @@ gcloud builds submit --tag gcr.io/cropthisface/authentificator
 ```
 After the image is deployed we create a new service. <br>
 Select the container registry image
-![image1](https://user-images.githubusercontent.com/43391630/80851273-aed6a000-8bee-11ea-91e6-f77ccf8c4e0b.png) <br>
+![image1](https://user-images.githubusercontent.com/43391630/80896397-7781f500-8cbb-11ea-954a-c1eb47e961c4.png) <br>
 Set the following settings
 ![image2](https://user-images.githubusercontent.com/43391630/80851250-88b10000-8bee-11ea-9b1a-9506ec25add7.png)
 
@@ -101,3 +102,5 @@ In case that you wanted to replicate this project create a Sagemaker session and
 }
 ```
 The data should be stored in `tmp/keys/sagemaker`.
+The Flask app is calling the function `train_deploy_model.py ` which is going to send to sagemaker the model we want to train. In this case we train a SVM located in `tmp/model.py`. 
+
