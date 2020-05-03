@@ -48,6 +48,43 @@ python3 main.py
 
 ## GCR
 
+We need to create an image for our container using our `Dockerfile`
+```Dockerfile
+#From Image selected
+FROM python:3.7.3-stretch
+
+# Working Directory
+
+WORKDIR /authentificator
+
+# Copy source code to working directory
+
+COPY . main.py /authentificator/
+
+# Install packages from requirements.txt
+
+RUN pip install --upgrade pip &&\
+    pip install torch --no-cache-dir torch &&\
+	pip install facenet_pytorch --no-cache-dir  &&\
+    pip install -r requirements.txt
+
+#Espose a port
+
+EXPOSE 8080
+
+CMD ["python", "main.py"]
+```
+Deploy to GCR   
+```bash
+gcloud builds submit --tag gcr.io/cropthisface/authentificator
+```
+After the image is deployed we create a new service. <br>
+Select the container registry image
+![image1](https://user-images.githubusercontent.com/43391630/80851273-aed6a000-8bee-11ea-91e6-f77ccf8c4e0b.png) <br>
+Set the following settings
+![image2](https://user-images.githubusercontent.com/43391630/80851250-88b10000-8bee-11ea-9b1a-9506ec25add7.png)
+
+
 ## Sagemaker
 
 We used our own personal AWS account for this project. 
