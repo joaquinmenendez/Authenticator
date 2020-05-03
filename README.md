@@ -46,12 +46,13 @@ python3 main.py
 ```
 
 
-### GCR
+## GCR
 
 ## Sagemaker
 
-We are using our own personal bucket (`video-facerecogproj`) for this project. 
-In case that you wanted to replicate this project create a new bucket and write the **access** and **secret** keys into a json file like this:
+We used our own personal AWS account for this project. 
+In case that you wanted to replicate this project create a Sagemaker session and write the **access** and **secret** keys into a json file like this:
+
 ```json
 {
 "AWS_ACCESS_KEY_ID": "",
@@ -62,3 +63,4 @@ In case that you wanted to replicate this project create a new bucket and write 
 "BUCKET_NAME": ""
 }
 ```
+The data shoul be stored in `tmp/keys/sagemaker`.
