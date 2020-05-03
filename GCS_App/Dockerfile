@@ -3,11 +3,11 @@ FROM python:3.7.3-stretch
 
 # Working Directory
 
-WORKDIR /recognizer
+WORKDIR /authentificator
 
 # Copy source code to working directory
 
-COPY . main.py /recognizer/
+COPY . main.py /authentificator/
 
 # Install packages from requirements.txt
 
