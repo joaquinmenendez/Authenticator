@@ -100,4 +100,4 @@ In case that you wanted to replicate this project create a Sagemaker session and
 "BUCKET_NAME": ""
 }
 ```
-The data shoul be stored in `tmp/keys/sagemaker`.
+The data should be stored in `tmp/keys/sagemaker`.
