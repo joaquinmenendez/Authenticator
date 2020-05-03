@@ -53,8 +53,12 @@ python3 main.py
 We are using our own personal bucket (`video-facerecogproj`) for this project. 
 In case that you wanted to replicate this project create a new bucket and write the **access** and **secret** keys into a json file like this:
 ```json
-{"AWS_ACCESS_KEY_ID" : "---",
-"AWS_SECRET_ACCESS_KEY" : "---",
-"REGION_NAME" : "---",
-"BUCKET_NAME" : "---"}
+{
+"AWS_ACCESS_KEY_ID": "",
+"AWS_SECRET_ACCESS_KEY": "",
+"REGION_NAME": "",
+"ROLE":"example:  arn:aws:iam::706015522303:role/sagemaker-role",
+"ENDPOINT_NAME" : "",
+"BUCKET_NAME": ""
+}
 ```
