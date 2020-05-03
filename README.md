@@ -30,15 +30,20 @@ The app process is described below:
 
 Note: a user may connect to SageMaker directly through the console via a POST request.
 
-## To run this app
+## To run this app locally
 
-
-### Virtual environment
+1)  Clone this repository.<br>
+2)  Create a virtual environment<br>
 ```bash
 virtualenv .myenv
 source .myenv/bin/activate
 make install
 ```
+3) Run it
+```python
+python3 main.py
+```
+
 
 ### GCR
 
